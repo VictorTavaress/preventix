@@ -1,161 +1,98 @@
-import * as React from "react";
-import { View } from "react-native";
-import Animated, {
-  FadeInUp,
-  FadeOutDown,
-  LayoutAnimationConfig,
-} from "react-native-reanimated";
-import { Info } from "~/lib/icons/Info";
-import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
-import { Button } from "~/components/ui/button";
+import React, { useState } from "react";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "~/components/ui/card";
-import { Progress } from "~/components/ui/progress";
-import { Text } from "~/components/ui/text";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "~/components/ui/tooltip";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "~/components/ui/select";
+  View,
+  TextInput,
+  TouchableOpacity,
+  Text,
+  Image,
+  Alert,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { login } from "~/lib/api";
+import { useRouter } from "expo-router"; // 👈 Importa o roteador
 
-const GITHUB_AVATAR_URI =
-  "https://i.pinimg.com/originals/ef/a2/8d/efa28d18a04e7fa40ed49eeb0ab660db.jpg";
+export default function LoginScreen() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter(); // 👈 Instância do roteador
 
-export default function Screen() {
-  const [progress, setProgress] = React.useState(78);
-
-  function updateProgressValue() {
-    setProgress(Math.floor(Math.random() * 100));
-  }
-
-  const insets = useSafeAreaInsets();
-  const contentInsets = {
-    top: insets.top,
-    bottom: insets.bottom,
-    left: 12,
-    right: 12,
+  const handleLogin = async () => {
+    setLoading(true);
+    try {
+      console.log("entrei");
+      const data = await login(email, password);
+      console.log("Token recebido:", data.token);
+      // Redirecionar para outra tela
+      router.push("/mode-selection"); // Caminho da nova tela
+    } catch (error) {
+      Alert.alert(String(error));
+    }
+    setLoading(false);
   };
+
   return (
-    <View className="flex-1 justify-center items-center gap-5 p-6 bg-secondary/30">
-      <Card className="w-full max-w-sm p-6 rounded-2xl">
-        <CardHeader className="items-center">
-          <Avatar alt="Rick Sanchez's Avatar" className="w-24 h-24">
-            <AvatarImage source={{ uri: GITHUB_AVATAR_URI }} />
-            <AvatarFallback>
-              <Text>RS</Text>
-            </AvatarFallback>
-          </Avatar>
-          <View className="p-3" />
-          <CardTitle className="pb-2 text-center">Rick Sanchez</CardTitle>
-          <View className="flex-row">
-            <CardDescription className="text-base font-semibold">
-              Scientist
-            </CardDescription>
-            <Tooltip delayDuration={150}>
-              <TooltipTrigger className="px-2 pb-0.5 active:opacity-50">
-                <Info
-                  size={14}
-                  strokeWidth={2.5}
-                  className="w-4 h-4 text-foreground/70"
-                />
-              </TooltipTrigger>
-              <TooltipContent className="py-2 px-4 shadow">
-                <Text className="native:text-lg">Freelance</Text>
-              </TooltipContent>
-            </Tooltip>
-          </View>
-        </CardHeader>
-        <CardContent>
-          <View className="flex-row justify-around gap-3">
-            <View className="items-center">
-              <Text className="text-sm text-muted-foreground">Dimension</Text>
-              <Text className="text-xl font-semibold">C-137</Text>
-            </View>
-            <View className="items-center">
-              <Text className="text-sm text-muted-foreground">Age</Text>
-              <Text className="text-xl font-semibold">70</Text>
-            </View>
-            <View className="items-center">
-              <Text className="text-sm text-muted-foreground">Species</Text>
-              <Text className="text-xl font-semibold">Human</Text>
-            </View>
-          </View>
-        </CardContent>
-        <CardFooter className="flex-col gap-3 pb-0">
-          <View className="flex-row items-center overflow-hidden">
-            <Text className="text-sm text-muted-foreground">Productivity:</Text>
-            <LayoutAnimationConfig skipEntering>
-              <Animated.View
-                key={progress}
-                entering={FadeInUp}
-                exiting={FadeOutDown}
-                className="w-11 items-center"
-              >
-                <Text className="text-sm font-bold text-sky-600">
-                  {progress}%
-                </Text>
-              </Animated.View>
-            </LayoutAnimationConfig>
-          </View>
-          <Progress
-            value={progress}
-            className="h-2"
-            indicatorClassName="bg-sky-600"
+    <View className="flex-1 justify-center items-center bg-[#0D0D1B]">
+      <Image
+        source={require("assets/images/Headline.png")}
+        className="w-96 h-12 mb-12"
+        resizeMode="contain"
+      />
+
+      <View className="w-full max-w-sm bg-white p-4 rounded-xl shadow-md">
+        <View className="flex-row items-center border-b border-gray-300 pt-1 pb-4 mb-4">
+          <Ionicons name="mail" size={20} color="gray" className="mr-2" />
+          <TextInput
+            placeholder="Email"
+            className="flex-1 text-lg"
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+            autoCapitalize="none"
           />
-          <View />
-          <Button
-            variant="outline"
-            className="shadow shadow-foreground/5"
-            onPress={updateProgressValue}
-          >
-            <Text>Update</Text>
-          </Button>
-          <Select defaultValue={{ value: "apple", label: "Apple" }}>
-            <SelectTrigger className="w-[250px]">
-              <SelectValue
-                className="text-foreground text-sm native:text-lg"
-                placeholder="Select a fruit"
-              />
-            </SelectTrigger>
-            <SelectContent insets={contentInsets} className="w-[250px]">
-              <SelectGroup>
-                <SelectLabel>Fruits</SelectLabel>
-                <SelectItem label="Apple" value="apple">
-                  Apple
-                </SelectItem>
-                <SelectItem label="Banana" value="banana">
-                  Banana
-                </SelectItem>
-                <SelectItem label="Blueberry" value="blueberry">
-                  Blueberry
-                </SelectItem>
-                <SelectItem label="Grapes" value="grapes">
-                  Grapes
-                </SelectItem>
-                <SelectItem label="Pineapple" value="pineapple">
-                  Pineapple
-                </SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </CardFooter>
-      </Card>
+        </View>
+
+        <View className="flex-row items-center border-gray-300 pb-1">
+          <Ionicons
+            name="lock-closed"
+            size={20}
+            color="gray"
+            className="mr-4"
+          />
+          <TextInput
+            placeholder="Senha"
+            className="flex-1 text-lg"
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry={!showPassword}
+            autoCapitalize="none"
+          />
+          <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+            <Ionicons
+              name={showPassword ? "eye" : "eye-off"}
+              size={20}
+              color="gray"
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+      <View className="w-full max-w-sm p-4 rounded-xl shadow-md mt-4">
+        <TouchableOpacity>
+          <Text className="text-center text-white underline mb-8">
+            Esqueceu a senha ?
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          className="bg-yellow-600 py-3 rounded-lg"
+          onPress={handleLogin}
+        >
+          <Text className="text-center text-white text-lg font-semibold">
+            {loading ? "Entrando..." : "Entrar"}
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }

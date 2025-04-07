@@ -1,0 +1,11 @@
+{
+    "serverlessConsole.services": [
+        {
+            "type": "dynamodb",
+            "title": "Users",
+            "tableName": "Users",
+            "awsProfile": "default",
+            "region": "sa-east-1"
+        }
+    ]
+}

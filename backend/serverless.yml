@@ -1,0 +1,56 @@
+service: preventix-api
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: sa-east-1
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - dynamodb:PutItem
+        - dynamodb:GetItem
+        - dynamodb:Query
+        - dynamodb:Scan
+      Resource:
+        - arn:aws:dynamodb:sa-east-1:017116125096:table/Users
+        - arn:aws:dynamodb:sa-east-1:017116125096:table/Users/index/EmailIndex # Permissão para acessar índice secundário
+  environment:
+    USERS_TABLE: Users
+    JWT_SECRET: ${env:JWT_SECRET}
+
+functions:
+  registerUser:
+    handler: src/controllers/userController.registerUser
+    events:
+      - http:
+          path: api/users/register
+          method: post
+          cors: true
+
+  loginUser:
+    handler: src/controllers/userController.loginUser
+    events:
+      - http:
+          path: api/users/login
+          method: post
+          cors: true
+
+  getUsers:
+    handler: src/controllers/userController.getUsers
+    events:
+      - http:
+          path: api/users
+          method: get
+          cors: true
+
+plugins:
+  - serverless-offline
+
+custom:
+  dynamodb:
+    start:
+      port: 8000
+      inMemory: true
+      migrate: true
+    stages:
+      - dev
