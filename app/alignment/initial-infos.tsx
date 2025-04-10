@@ -13,19 +13,78 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { useForm } from "~/lib/context";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectGroup,
+  SelectLabel,
+  SelectItem,
+} from "~/components/ui/select";
 
 export default function GeneralInfoScreen() {
+  const getTodayFormatted = () => {
+    const today = new Date();
+    const day = String(today.getDate()).padStart(2, "0");
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const year = today.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+
   const router = useRouter();
   const { updateFormData } = useForm();
 
   const [machineId, setMachineId] = useState("");
   const [company, setCompany] = useState("");
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(getTodayFormatted());
   const [operator, setOperator] = useState("");
   const [notes, setNotes] = useState("");
   const [speed, setSpeed] = useState("");
   const [deviation, setDeviation] = useState("");
   const [angularError, setAngularError] = useState("");
+
+  const rpmOptions = [
+    {
+      label: "0 - 1000",
+      value: "0 - 1000",
+      deviation: "0.13 mm",
+      angularError: "0.10 mm/100",
+    },
+    {
+      label: "1000 - 2000",
+      value: "1000 - 2000",
+      deviation: "0.10 mm",
+      angularError: "0.08 mm/100",
+    },
+    {
+      label: "2000 - 3000",
+      value: "2000 - 3000",
+      deviation: "0.07 mm",
+      angularError: "0.07 mm/100",
+    },
+    {
+      label: "3000 - 4000",
+      value: "3000 - 4000",
+      deviation: "0.05 mm",
+      angularError: "0.06 mm/100",
+    },
+    {
+      label: "4000 - 6000",
+      value: "4000 - 6000",
+      deviation: "0.03 mm",
+      angularError: "0.05 mm/100",
+    },
+  ];
+
+  const handleSpeedChange = (value: string) => {
+    setSpeed(value);
+    const selected = rpmOptions.find((opt) => opt.label === value);
+    if (selected) {
+      setDeviation(selected.deviation);
+      setAngularError(selected.angularError);
+    }
+  };
 
   const handleNext = () => {
     if (
@@ -61,18 +120,20 @@ export default function GeneralInfoScreen() {
   const handleDateChange = (text: string) => {
     const cleaned = text.replace(/\D/g, ""); // remove não-dígitos
     let masked = "";
-  
+
     if (cleaned.length <= 2) {
       masked = cleaned;
     } else if (cleaned.length <= 4) {
       masked = `${cleaned.slice(0, 2)}/${cleaned.slice(2)}`;
     } else {
-      masked = `${cleaned.slice(0, 2)}/${cleaned.slice(2, 4)}/${cleaned.slice(4, 8)}`;
+      masked = `${cleaned.slice(0, 2)}/${cleaned.slice(2, 4)}/${cleaned.slice(
+        4,
+        8
+      )}`;
     }
-  
+
     setDate(masked);
   };
-  
 
   return (
     <KeyboardAvoidingView
@@ -85,7 +146,9 @@ export default function GeneralInfoScreen() {
           keyboardShouldPersistTaps="handled"
           className="bg-gray-200"
         >
-          <Text className="text-3xl font-bold text-center mb-10">Preventix</Text>
+          <Text className="text-3xl font-bold text-center mb-10">
+            Preventix
+          </Text>
 
           <Text className="bg-black text-white text-center py-2 rounded mb-4">
             Informações gerais
@@ -134,26 +197,43 @@ export default function GeneralInfoScreen() {
             Tolerâncias
           </Text>
 
-          <TextInput
-            value={speed}
-            onChangeText={setSpeed}
-            placeholder="Velocidade (rpm)"
-            className="bg-white px-4 py-3 rounded mb-4"
-            keyboardType="numeric"
-          />
+          <Select
+            value={rpmOptions.find((opt) => opt.value === speed)}
+            onValueChange={(option) => {
+              if (option) {
+                handleSpeedChange(option.value);
+              }
+            }}
+          >
+            <SelectTrigger className="w-full bg-white rounded-md px-4 py-3 mb-4">
+              <SelectValue
+                placeholder="Selecione a faixa de rotação (RPM)"
+                className="text-foreground text-base"
+              />
+            </SelectTrigger>
+            <SelectContent className="w-full max-w-sm">
+              <SelectGroup>
+                <SelectLabel>Faixas de RPM</SelectLabel>
+                {rpmOptions.map((option) => (
+                  <SelectItem key={option.value} value={option.value} label={option.label}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+
           <TextInput
             value={deviation}
-            onChangeText={setDeviation}
             placeholder="Desvio (mm)"
+            editable={false}
             className="bg-white px-4 py-3 rounded mb-4"
-            keyboardType="numeric"
           />
           <TextInput
             value={angularError}
-            onChangeText={setAngularError}
             placeholder="Erro angular (mm/100)"
+            editable={false}
             className="bg-white px-4 py-3 rounded mb-6"
-            keyboardType="numeric"
           />
 
           <TouchableOpacity

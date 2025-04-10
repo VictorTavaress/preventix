@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/images/Headline.png",
     "scheme": "myapp",
-    "userInterfaceStyle": "automatic",
+    "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
       "image": "./assets/images/Headline.png",
@@ -31,7 +31,9 @@
       "favicon": "./assets/images/IconLogobg.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "expo-asset",
+      "expo-secure-store"
     ],
     "experiments": {
       "typedRoutes": true

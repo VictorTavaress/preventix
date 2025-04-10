@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   TextInput,
@@ -8,26 +8,34 @@ import {
   Alert,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import NetInfo from "@react-native-community/netinfo";
 import { login } from "~/lib/api";
-import { useRouter } from "expo-router"; // 👈 Importa o roteador
+import { useRouter } from "expo-router";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const router = useRouter(); // 👈 Instância do roteador
+  const [isOnline, setIsOnline] = useState<boolean | null>(null);
+  const router = useRouter();
+
+  // Verifica conectividade
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener((state) => {
+      setIsOnline(state.isConnected);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const handleLogin = async () => {
     setLoading(true);
     try {
-      console.log("entrei");
       const data = await login(email, password);
-      console.log("Token recebido:", data.token);
-      // Redirecionar para outra tela
-      router.push("/mode-selection"); // Caminho da nova tela
+      router.push("/mode-selection");
     } catch (error) {
-      Alert.alert(String(error));
+      Alert.alert("Erro ao entrar", String(error));
     }
     setLoading(false);
   };
@@ -77,12 +85,25 @@ export default function LoginScreen() {
           </TouchableOpacity>
         </View>
       </View>
+
+      {/* Status de Conexão */}
+      <Text className="text-white mt-4 text-sm">
+        Status:{" "}
+        <Text className={isOnline ? "text-green-400" : "text-red-400"}>
+          {isOnline === null
+            ? "Verificando..."
+            : isOnline
+            ? "Online"
+            : "Offline"}
+        </Text>
+      </Text>
+
       <View className="w-full max-w-sm p-4 rounded-xl shadow-md mt-4">
-        <TouchableOpacity>
+        {/* <TouchableOpacity>
           <Text className="text-center text-white underline mb-8">
             Esqueceu a senha ?
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <TouchableOpacity
           className="bg-yellow-600 py-3 rounded-lg"

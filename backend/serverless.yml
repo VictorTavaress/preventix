@@ -13,14 +13,22 @@ provider:
         - dynamodb:Scan
       Resource:
         - arn:aws:dynamodb:sa-east-1:017116125096:table/Users
-        - arn:aws:dynamodb:sa-east-1:017116125096:table/Users/index/EmailIndex # Permissão para acessar índice secundário
+        - arn:aws:dynamodb:sa-east-1:017116125096:table/Users/index/EmailIndex
+    - Effect: "Allow"
+      Action:
+        - s3:PutObject
+        - s3:GetObject
+        - s3:PutObjectAcl
+      Resource: arn:aws:s3:::preventix-pdf-upload/*
+
   environment:
     USERS_TABLE: Users
     JWT_SECRET: ${env:JWT_SECRET}
+    UPLOADS_BUCKET: preventix-pdf-upload
 
 functions:
   registerUser:
-    handler: src/controllers/userController.registerUser
+    handler: src/handler.registerUser
     events:
       - http:
           path: api/users/register
@@ -28,7 +36,7 @@ functions:
           cors: true
 
   loginUser:
-    handler: src/controllers/userController.loginUser
+    handler: src/handler.loginUser
     events:
       - http:
           path: api/users/login
@@ -36,17 +44,34 @@ functions:
           cors: true
 
   getUsers:
-    handler: src/controllers/userController.getUsers
+    handler: src/handler.getUsers
     events:
       - http:
           path: api/users
           method: get
           cors: true
 
+  uploadPdf:
+    handler: src/handler.upload
+    events:
+      - http:
+          path: api/upload
+          method: post
+          cors: true
+
 plugins:
   - serverless-offline
+  - serverless-esbuild
 
 custom:
+  esbuild:
+    bundle: true
+    minify: false
+    sourcemap: true
+    target: node18
+    platform: node
+    concurrency: 10
+
   dynamodb:
     start:
       port: 8000
