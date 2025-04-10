@@ -15,6 +15,7 @@ import { router } from "expo-router";
 import NetInfo from "@react-native-community/netinfo";
 import * as FileSystem from "expo-file-system";
 import { api } from "../../lib/api"; // onde está seu axios configurado
+import staticImage from "../../assets/images/base64Static";
 
 export default function ReviewInfosScreen() {
   const { formData } = useForm();
@@ -138,6 +139,7 @@ export default function ReviewInfosScreen() {
         },
         images: remainingImages,
         firstImage: firstImage,
+        staticImage: staticImage,
       });
 
       if (isConnected) {

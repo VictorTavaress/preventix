@@ -4,6 +4,18 @@ import * as Print from 'expo-print';
 import * as SecureStore from "expo-secure-store";
 import * as Crypto from "expo-crypto";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as FileSystem from 'expo-file-system';
+
+interface GeneratePdfParams {
+  htmlTemplate: any;
+  fileName: string;
+  placeholders: Record<string, string>;
+  images?: string[];
+  imagePlaceholder?: string;
+  onFinish?: (uri: string) => void;
+  firstImage?: string;
+  staticImage?: string; // base64 ou caminho local
+}
 
 export const hashPassword = async (password: string) => {
   return await Crypto.digestStringAsync(
@@ -37,24 +49,14 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-interface GeneratePdfParams {
-  htmlTemplate: any;
-  fileName: string;
-  placeholders: Record<string, string>;
-  images?: string[];
-  imagePlaceholder?: string;
-  onFinish?: (uri: string) => void;
-  firstImage?: string; // <- aqui
-}
-
 export async function generatePdf({
   htmlTemplate,
-  fileName,
   placeholders,
   images = [],
   imagePlaceholder = '{{photos}}',
   onFinish,
   firstImage = '',
+  staticImage = '',
 }: GeneratePdfParams) {
   try {
     let html = htmlTemplate;
@@ -66,35 +68,44 @@ export async function generatePdf({
 
     // Substitui imagem principal (firstImage)
     if (firstImage) {
-      const firstImageHTML = `<img src="${firstImage}" alt="Foto da máquina" style="max-width: 250px; max-height: 200px; border: 1px solid #ccc; border-radius: 4px; object-fit: cover;"  />`;
+      const firstImageHTML = `<img src="${firstImage}" alt="Foto da máquina" style="max-width: 250px; max-height: 200px; border: 1px solid #ccc; border-radius: 4px; object-fit: cover;" />`;
       html = html.replace('{{firstImage}}', firstImageHTML);
     } else {
       html = html.replace('{{firstImage}}', '');
     }
 
-    // Adiciona seção de imagens em nova página se houver imagens
+    // Substitui imagem estática (staticImage)
+    if (staticImage) {
+      const staticImageHTML = `<img src="${staticImage}"alt="Alinhamento Motor" style="width: 150px;" />`;
+      html = html.replace('{{staticImageCorrected}}', staticImageHTML);
+      html = html.replace('{{staticImageFounded}}', staticImageHTML);
+    } else {
+      html = html.replace('{{staticImageCorrected}}', '');
+      html = html.replace('{{staticImageFounded}}', '');
+    }
+
+    // Seção de múltiplas imagens
     if (images.length > 0) {
       const photosHTML = `
-      <div style="page-break-before: always;"></div>
-      <div style="background:rgb(255, 255, 255); min-height: 80vh; padding: 40px; font-family: Arial, sans-serif;">
-        <div style="background:rgb(15, 155, 211); padding: 20px 32px; border-radius: 2px; margin-bottom: 20px; color: #fff; text-align: center;">
-          <div style="font-size:16px; font-weight: bold;">Relatório de Alinhamento de Eixo</div>
-          <div style="font-size: 12px; margin-top: 2px;">Alinhamento a Laser</div>
-        </div>
-        <div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 10px; margin-top: 20px;">
-          ${images
+        <div style="page-break-before: always;"></div>
+        <div style="background:rgb(255, 255, 255); min-height: 80vh; padding: 40px; font-family: Arial, sans-serif;">
+          <div style="background:rgb(15, 155, 211); padding: 20px 32px; border-radius: 2px; margin-bottom: 20px; color: #fff; text-align: center;">
+            <div style="font-size:16px; font-weight: bold;">Relatório de Alinhamento de Eixo</div>
+            <div style="font-size: 12px; margin-top: 2px;">Alinhamento a Laser</div>
+          </div>
+          <div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 10px; margin-top: 20px;">
+            ${images
           .map(
             (base64) =>
               `<img src="${base64}" style="width: 280px; height: auto; max-height: 300px; border: 1px solid #ccc; border-radius: 4px; object-fit: cover;" />`
           )
           .join('')}
+          </div>
         </div>
-      </div>
-    `;
-
+      `;
       html = html.replace(imagePlaceholder, photosHTML);
     } else {
-      html = html.replace(imagePlaceholder, ''); // remove placeholder se não houver imagens
+      html = html.replace(imagePlaceholder, '');
     }
 
     // Gera o PDF
@@ -113,3 +124,4 @@ export async function generatePdf({
     throw err;
   }
 }
+

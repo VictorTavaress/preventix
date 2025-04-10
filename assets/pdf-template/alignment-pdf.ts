@@ -171,7 +171,7 @@ export const alignmentTemplate = `
       </div>
       <div style="text-align: center; margin-top: 10px; margin-bottom: 10px;">
         <!-- Substituir pelo desenho técnico abaixo -->
-        <img src="https://www.researchgate.net/publication/311809922/figure/fig3/AS:442068519657474@1482408756341/Figura-5-Desalinhamento-e-Alinhamento-de-eixos.png" alt="Alinhamento Motor" style="width: 150px;">
+        {{staticImageCorrected}}
       </div>
       <div style="background: #ffffcc; padding: 4px 6px; border-radius: 4px; margin-bottom: 4px;">
         <span style="color: #000;">H-Desvio:</span>
@@ -193,7 +193,7 @@ export const alignmentTemplate = `
       </div>
       <div style="text-align: center; margin-top: 10px; margin-bottom: 10px;">
         <!-- Substituir pelo desenho técnico abaixo -->
-        <img src="https://www.researchgate.net/publication/311809922/figure/fig3/AS:442068519657474@1482408756341/Figura-5-Desalinhamento-e-Alinhamento-de-eixos.png" alt="Alinhamento Motor" style="width: 150px;">
+         {{staticImageFounded}}
       </div>
       <div style="background: #ffffcc; padding: 4px 6px; border-radius: 4px; margin-bottom: 4px;">
         <span style="color: #000;">H-Desvio:</span>
