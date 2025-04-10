@@ -76,16 +76,16 @@ export async function generatePdf({
     if (images.length > 0) {
       const photosHTML = `
       <div style="page-break-before: always;"></div>
-      <div style="background: #f9f9f9; min-height: 100vh; padding: 40px; font-family: Arial, sans-serif;">
+      <div style="background:rgb(255, 255, 255); min-height: 80vh; padding: 40px; font-family: Arial, sans-serif;">
         <div style="background:rgb(15, 155, 211); padding: 20px 32px; border-radius: 2px; margin-bottom: 20px; color: #fff; text-align: center;">
           <div style="font-size:16px; font-weight: bold;">Relatório de Alinhamento de Eixo</div>
           <div style="font-size: 12px; margin-top: 2px;">Alinhamento a Laser</div>
         </div>
-        <div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 20px; margin-top: 20px;">
+        <div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 10px; margin-top: 20px;">
           ${images
           .map(
             (base64) =>
-              `<img src="${base64}" style="width: 290px; height: auto; max-height: 300px; border: 1px solid #ccc; border-radius: 4px; object-fit: cover;" />`
+              `<img src="${base64}" style="width: 280px; height: auto; max-height: 300px; border: 1px solid #ccc; border-radius: 4px; object-fit: cover;" />`
           )
           .join('')}
         </div>

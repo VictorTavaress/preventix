@@ -1,38 +1,93 @@
-import { Pressable, View } from 'react-native';
-import { setAndroidNavigationBar } from '~/lib/android-navigation-bar';
-import { MoonStar } from '~/lib/icons/MoonStar';
-import { Sun } from '~/lib/icons/Sun';
-import { useColorScheme } from '~/lib/useColorScheme';
-import { cn } from '~/lib/utils';
+import * as React from "react";
+import Animated, { FadeIn } from "react-native-reanimated";
+import { Button } from "~/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "~/components/ui/dropdown-menu";
+import { Text } from "~/components/ui/text";
+import type { EdgeInsets } from 'react-native-safe-area-context';
 
-export function ThemeToggle() {
-  const { isDarkColorScheme, setColorScheme } = useColorScheme();
+const contentInsets: EdgeInsets = {
+  top: 16,
+  bottom: 16,
+  left: 16,
+  right: 16,
+};
 
-  function toggleColorScheme() {
-    const newTheme = isDarkColorScheme ? 'light' : 'dark';
-    setColorScheme(newTheme);
-    setAndroidNavigationBar(newTheme);
-  }
+function AvatarDropdown() {
+  // Define os insets manualmente ou use algum hook/contexto que retorne isso
 
   return (
-    <Pressable
-      onPress={toggleColorScheme}
-      className='web:ring-offset-background web:transition-colors web:focus-visible:outline-none web:focus-visible:ring-2 web:focus-visible:ring-ring web:focus-visible:ring-offset-2'
-    >
-      {({ pressed }) => (
-        <View
-          className={cn(
-            'flex-1 aspect-square pt-0.5 justify-center items-start web:px-5',
-            pressed && 'opacity-70'
-          )}
-        >
-          {isDarkColorScheme ? (
-            <MoonStar className='text-foreground' size={23} strokeWidth={1.25} />
-          ) : (
-            <Sun className='text-foreground' size={24} strokeWidth={1.25} />
-          )}
-        </View>
-      )}
-    </Pressable>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline">
+          <Text>Open</Text>
+        </Button>
+      </DropdownMenuTrigger>
+
+      <DropdownMenuContent
+        forceMount
+        insets={contentInsets}
+        className="w-64 native:w-72"
+      >
+        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
+          <DropdownMenuItem>
+            <Text>Team</Text>
+          </DropdownMenuItem>
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>
+              <Text>Invite users</Text>
+            </DropdownMenuSubTrigger>
+            <DropdownMenuSubContent forceMount>
+              <Animated.View entering={FadeIn.duration(200)}>
+                <DropdownMenuItem>
+                  <Text>Email</Text>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Text>Message</Text>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <Text>More...</Text>
+                </DropdownMenuItem>
+              </Animated.View>
+            </DropdownMenuSubContent>
+          </DropdownMenuSub>
+          <DropdownMenuItem>
+            <Text>New Team</Text>
+            <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem>
+          <Text>GitHub</Text>
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          <Text>Support</Text>
+        </DropdownMenuItem>
+        <DropdownMenuItem disabled>
+          <Text>API</Text>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem>
+          <Text>Log out</Text>
+          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
+
+export default AvatarDropdown;

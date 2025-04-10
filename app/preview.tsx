@@ -124,7 +124,9 @@ export default function PdfPreviewScreen() {
         {isOnline && path?.startsWith("http") ? (
           <WebView
             originWhitelist={["*"]}
-            source={{ uri: path }}
+            source={{
+              uri: `https://docs.google.com/gview?embedded=true&url=${path}`,
+            }}
             style={{ flex: 1 }}
             startInLoadingState
             renderLoading={() => (
@@ -163,7 +165,7 @@ export default function PdfPreviewScreen() {
       </View>
 
       <TouchableOpacity
-        className="bg-yellow-600 py-3 rounded mt-4"
+        className="bg-yellow-600 py-3 rounded mt-4 mb-4"
         onPress={handleShare}
       >
         <Text className="text-white text-center font-semibold">
@@ -173,7 +175,7 @@ export default function PdfPreviewScreen() {
 
       {isOnline && path?.startsWith("http") && (
         <TouchableOpacity
-          className="bg-yellow-800 py-3 rounded mt-2"
+          className="bg-yellow-800 py-4 rounded mt-2 mb-4"
           onPress={handleDownload}
           disabled={isDownloading}
         >

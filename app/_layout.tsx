@@ -13,7 +13,7 @@ import { Platform } from "react-native";
 import { NAV_THEME } from "~/lib/constants";
 import { useColorScheme } from "~/lib/useColorScheme";
 import { PortalHost } from "@rn-primitives/portal";
-import { ThemeToggle } from "~/components/ThemeToggle";
+import AvatarDropdown from "~/components/ThemeToggle";
 import { setAndroidNavigationBar } from "~/lib/android-navigation-bar";
 import { FormProvider } from "~/lib/context";
 
@@ -58,16 +58,32 @@ export default function RootLayout() {
     <ThemeProvider value={DARK_THEME}>
       <FormProvider>
         <StatusBar style={"light"} />
-        <Stack>
+        <Stack
+          screenOptions={{
+            headerTitle: "",
+            headerBackVisible: true,
+            headerBackTitle: "Voltar",
+          }}
+        >
+          {/* Oculta o header na tela de login */}
+          <Stack.Screen
+            name="login"
+            options={{
+              headerShown: false,
+            }}
+          />
+
+          {/* Para todas as outras telas, exibe apenas botão de voltar, sem título */}
           <Stack.Screen
             name="index"
-            options={({ route }) => ({
-              title: route.name === "index" ? "" : "Starter Base",
-              headerRight: () =>
-                route.name === "index" ? null : <ThemeToggle />,
-            })}
+            options={{
+              headerShown: true,
+              headerTitle: "", // título vazio
+              headerRight: undefined,
+            }}
           />
         </Stack>
+
         <PortalHost />
       </FormProvider>
     </ThemeProvider>

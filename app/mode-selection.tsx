@@ -26,10 +26,8 @@ export default function ModeSelectionScreen() {
 
   const handleUseModel = () => {
     if (!selectedModel) return;
-    console.log("Modelo selecionado:", selectedModel);
     // redireciona para a home ou outra tela
     // router.push("/");
-    console.log("Modelo selecionado:", selectedModel);
     if (selectedModel.value === "alinhamento") {
       router.push("/alignment/initial-infos");
     }

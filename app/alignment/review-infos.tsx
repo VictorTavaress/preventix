@@ -22,6 +22,41 @@ export default function ReviewInfosScreen() {
   const found = formData.alignmentInfo?.found || {};
   const corrected = formData.alignmentInfo?.corrected || {};
 
+  function compareWithTolerance(
+    value: number | string | undefined | null,
+    tolerance: number | string | undefined | null
+  ): string {
+    if (
+      value === undefined ||
+      value === null ||
+      tolerance === undefined ||
+      tolerance === null
+    )
+      return "";
+
+    // Corrige vírgula decimal e extrai número do valor
+    const parsedValue =
+      typeof value === "string"
+        ? parseFloat(value.replace(",", ".").match(/[\d.]+/)?.[0] ?? "")
+        : value;
+
+    // Corrige vírgula decimal e extrai número da tolerância
+    const parsedTolerance =
+      typeof tolerance === "string"
+        ? parseFloat(tolerance.replace(",", ".").match(/[\d.]+/)?.[0] ?? "")
+        : tolerance;
+
+    if (isNaN(parsedValue) || isNaN(parsedTolerance)) return "";
+
+    const isOk = Math.abs(parsedValue) <= parsedTolerance;
+    const symbol = isOk ? "✓" : "✗";
+    const color = isOk ? "green" : "red";
+
+    return `<span>${parsedValue.toFixed(
+      2
+    )} <span style="color: ${color}; font-weight: bold;">${symbol}</span></span>`;
+  }
+
   async function handleGeneratePDF() {
     const fileName =
       `Alinhamento-${general.company}-${general.operator}.pdf`.replace(
@@ -31,7 +66,6 @@ export default function ReviewInfosScreen() {
 
     const allPhotos = Array.isArray(formData.photos) ? formData.photos : [];
     const firstImage = allPhotos[0] || "";
-    console.log("firstImage", firstImage);
     const remainingImages = allPhotos.slice(1); // ← Apenas array, sem map nem join
     try {
       const { isConnected } = await NetInfo.fetch();
@@ -52,22 +86,49 @@ export default function ReviewInfosScreen() {
           "{{deviation}}": general.deviation || "",
           "{{angularError}}": general.angularError || "",
 
-          // Conforme encontrado
-          "{{foundDeviationVertical}}": found.deviation?.vertical || "",
-          "{{foundDeviationHorizontal}}": found.deviation?.horizontal || "",
-          "{{foundAngleVertical}}": found.angle?.vertical || "",
-          "{{foundAngleHorizontal}}": found.angle?.horizontal || "",
+          // Conforme encontrado (com lógica de tolerância)
+          "{{foundDeviationVertical}}": compareWithTolerance(
+            found.deviation?.vertical,
+            general.deviation
+          ),
+          "{{foundDeviationHorizontal}}": compareWithTolerance(
+            found.deviation?.horizontal,
+            general.deviation
+          ),
+          "{{foundAngleVertical}}": compareWithTolerance(
+            found.angle?.vertical,
+            general.angularError
+          ),
+          "{{foundAngleHorizontal}}": compareWithTolerance(
+            found.angle?.horizontal,
+            general.angularError
+          ),
+
+          // Pés encontrados (sem comparação)
           "{{foundFrontFootVertical}}": found.frontFoot?.vertical || "",
           "{{foundFrontFootHorizontal}}": found.frontFoot?.horizontal || "",
           "{{foundRearFootVertical}}": found.rearFoot?.vertical || "",
           "{{foundRearFootHorizontal}}": found.rearFoot?.horizontal || "",
 
-          // Conforme corrigido
-          "{{correctedDeviationVertical}}": corrected.deviation?.vertical || "",
-          "{{correctedDeviationHorizontal}}":
-            corrected.deviation?.horizontal || "",
-          "{{correctedAngleVertical}}": corrected.angle?.vertical || "",
-          "{{correctedAngleHorizontal}}": corrected.angle?.horizontal || "",
+          // Conforme corrigido (com lógica de tolerância)
+          "{{correctedDeviationVertical}}": compareWithTolerance(
+            corrected.deviation?.vertical,
+            general.deviation
+          ),
+          "{{correctedDeviationHorizontal}}": compareWithTolerance(
+            corrected.deviation?.horizontal,
+            general.deviation
+          ),
+          "{{correctedAngleVertical}}": compareWithTolerance(
+            corrected.angle?.vertical,
+            general.angularError
+          ),
+          "{{correctedAngleHorizontal}}": compareWithTolerance(
+            corrected.angle?.horizontal,
+            general.angularError
+          ),
+
+          // Pés corrigidos (sem comparação)
           "{{correctedFrontFootVertical}}": corrected.frontFoot?.vertical || "",
           "{{correctedFrontFootHorizontal}}":
             corrected.frontFoot?.horizontal || "",
@@ -88,7 +149,6 @@ export default function ReviewInfosScreen() {
           file: base64,
           fileName,
         });
-        console.log("responseresponseresponse", response.data.url);
         router.push({
           pathname: "/preview",
           params: { url: response.data.url },

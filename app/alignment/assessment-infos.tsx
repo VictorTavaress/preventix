@@ -17,6 +17,13 @@ export default function AssessmentInfosScreen() {
   const router = useRouter();
   const { updateFormData } = useForm();
 
+  const fieldLabels: Record<keyof typeof found, string> = {
+    deviation: "Desvio",
+    angle: "Ângulo",
+    frontFoot: "Pé frontal",
+    rearFoot: "Pé traseiro",
+  };
+
   const createPairState = () => ({
     vertical: "",
     horizontal: "",
@@ -76,13 +83,20 @@ export default function AssessmentInfosScreen() {
 
         {Object.entries(data).map(([key, value]) => (
           <View key={key} className="mb-4">
-            <Text className="text-sm mb-1 capitalize">{key.replace(/([A-Z])/g, " $1")}</Text>
+            <Text className="text-sm mb-1 capitalize">
+            {fieldLabels[key as keyof typeof found]}
+            </Text>
             <View className="flex-row gap-4">
               <TextInput
                 placeholder="Vertical"
                 value={value.vertical}
                 onChangeText={(text) =>
-                  handleInputChange(type, key as keyof typeof found, "vertical", text)
+                  handleInputChange(
+                    type,
+                    key as keyof typeof found,
+                    "vertical",
+                    text
+                  )
                 }
                 className="flex-1 bg-white px-4 py-3 rounded"
                 keyboardType="numeric"
@@ -91,7 +105,12 @@ export default function AssessmentInfosScreen() {
                 placeholder="Horizontal"
                 value={value.horizontal}
                 onChangeText={(text) =>
-                  handleInputChange(type, key as keyof typeof found, "horizontal", text)
+                  handleInputChange(
+                    type,
+                    key as keyof typeof found,
+                    "horizontal",
+                    text
+                  )
                 }
                 className="flex-1 bg-white px-4 py-3 rounded"
                 keyboardType="numeric"
@@ -113,7 +132,9 @@ export default function AssessmentInfosScreen() {
           className="flex-1 bg-gray-200 px-6 py-10"
           keyboardShouldPersistTaps="handled"
         >
-          <Text className="text-3xl font-bold text-center mb-10">Preventix</Text>
+          <Text className="text-3xl font-bold text-center mb-10">
+            Preventix
+          </Text>
 
           {renderSection("Conforme encontrado", "found")}
           {renderSection("Conforme corrigido", "corrected")}
@@ -123,7 +144,9 @@ export default function AssessmentInfosScreen() {
               onPress={() => router.back()}
               className="flex-1 bg-yellow-600 py-4 rounded"
             >
-              <Text className="text-center text-white font-semibold text-base">← Voltar</Text>
+              <Text className="text-center text-white font-semibold text-base">
+                ← Voltar
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={handleNext}

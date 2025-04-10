@@ -8,7 +8,7 @@ export const alignmentTemplate = `
    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
    <style>
     html, body {
-      background: #f9f9f9 !important;
+      background:rgb(255, 255, 255) !important;
     }
 
     @media print {
@@ -21,7 +21,7 @@ export const alignmentTemplate = `
 </head>
 
 <body style="margin: 0;">
- <div style="background: #f9f9f9; min-height: 100vh; padding: 40px; font-family: Arial, sans-serif;">
+ <div style="background:rgb(255, 255, 255); min-height: 90vh; padding: 40px; font-family: Arial, sans-serif;">
     <!-- todo o conteúdo do relatório aqui -->
  
   <!-- Cabeçalho -->
@@ -101,13 +101,13 @@ export const alignmentTemplate = `
         <tbody>
           <tr>
             <td style="padding: 5px 10px; border: 1px solid #333; font-size: 12px;">Desvio (mm)</td>
-            <td style="padding: 5px 10px; border: 1px solid #333; font-size: 12px;">{{foundDeviationVertical}} ✗</td>
-            <td style="padding: 5px 10px; border: 1px solid #333; font-size: 12px;">{{foundDeviationHorizontal}} ✗</td>
+            <td style="padding: 5px 10px; border: 1px solid #333; font-size: 12px; background: #e8f0ff;">{{foundDeviationVertical}}</td>
+            <td style="padding: 5px 10px; border: 1px solid #333; font-size: 12px; background: #e8f0ff;">{{foundDeviationHorizontal}}</td>
           </tr>
           <tr>
             <td style="padding: 5px 10px; border: 1px solid #333; font-size: 12px;">Ângulo (mm/100)</td>
-            <td style="padding: 5px 10px; border: 1px solid #333; font-size: 12px;">{{foundAngleVertical}} ✗</td>
-            <td style="padding: 5px 10px; border: 1px solid #333; font-size: 12px;">{{foundAngleHorizontal}} ✓</td>
+            <td style="padding: 5px 10px; border: 1px solid #333; font-size: 12px; background: #e8f0ff;">{{foundAngleVertical}}</td>
+            <td style="padding: 5px 10px; border: 1px solid #333; font-size: 12px; background: #e8f0ff;">{{foundAngleHorizontal}}</td>
           </tr>
           <tr>
             <td style="padding: 5px 10px; border: 1px solid #333; font-size: 12px;">Pé Dianteiro (mm)</td>
@@ -136,13 +136,13 @@ export const alignmentTemplate = `
         <tbody>
           <tr>
             <td style="padding: 5px 10px; border: 1px solid #333; font-size: 12px;">Desvio (mm)</td>
-            <td style="padding: 5px 10px; border: 1px solid #333; font-size: 12px;">{{correctedDeviationVertical}} ✓</td>
-            <td style="padding: 5px 10px; border: 1px solid #333; font-size: 12px;">{{correctedDeviationHorizontal}} ✓</td>
+            <td style="padding: 5px 10px; border: 1px solid #333; font-size: 12px; background: #e8f0ff;">{{correctedDeviationVertical}}</td>
+            <td style="padding: 5px 10px; border: 1px solid #333; font-size: 12px; background: #e8f0ff;">{{correctedDeviationHorizontal}}</td>
           </tr>
           <tr>
             <td style="padding: 5px 10px; border: 1px solid #333; font-size: 12px;">Ângulo (mm/100)</td>
-            <td style="padding: 5px 10px; border: 1px solid #333; font-size: 12px;">{{correctedAngleVertical}} ✓</td>
-            <td style="padding: 5px 10px; border: 1px solid #333; font-size: 12px;">{{correctedAngleHorizontal}} ✓</td>
+            <td style="padding: 5px 10px; border: 1px solid #333; font-size: 12px; background: #e8f0ff;">{{correctedAngleVertical}}</td>
+            <td style="padding: 5px 10px; border: 1px solid #333; font-size: 12px; background: #e8f0ff;">{{correctedAngleHorizontal}}</td>
           </tr>
           <tr>
             <td style="padding: 5px 10px; border: 1px solid #333; font-size: 12px;">Pé Dianteiro (mm)</td>
@@ -160,58 +160,54 @@ export const alignmentTemplate = `
   </div>
   
  <div style="display: flex; justify-content: space-between; gap: 20px; margin-top: 10px;">
-        <div style="width: 100%; border: 1px solid #ccc; padding: 8px; font-family: Arial, sans-serif; font-size: 12px; background: #fff;">
-    <div style="background: #ffffcc; padding: 4px 6px; border-radius: 4px; margin-bottom: 4px;">
-      <span style="color: #000;">V-Desvio:  -0,06 mm</span>
-      <span style="color: green; float: right;">✔</span>
-    </div>
-    <div style="background: #ffffcc; padding: 4px 6px; border-radius: 4px;">
-      <span style="color: #000;">V-Ângulo:  0,01 mm/100</span>
-      <span style="color: green; float: right;">✔</span>
-    </div>
-
-    <div style="text-align: center; margin-top: 10px; margin-bottom: 10px;">
-      <!-- Substituir pelo desenho técnico abaixo -->
-      <img src="https://www.researchgate.net/publication/311809922/figure/fig3/AS:442068519657474@1482408756341/Figura-5-Desalinhamento-e-Alinhamento-de-eixos.png" alt="Alinhamento Motor" style="width: 150px;">
-    </div>
-    <div style="background: #ffffcc; padding: 4px 6px; border-radius: 4px; margin-bottom: 4px;">
-      <span style="color: #000;">H-Desvio:  -0,06 mm</span>
-      <span style="color: green; float: right;">✔</span>
-    </div>
-    <div style="background: #ffffcc; padding: 4px 6px; border-radius: 4px;">
-      <span style="color: #000;">H-Ângulo:  0,01 mm/100</span>
-      <span style="color: green; float: right;">✔</span>
-    </div>
+    <div style="width: 100%; border: 1px solid #ccc; padding: 8px; font-family: Arial, sans-serif; font-size: 12px; background: #fff;">
+      <div style="background: #ffffcc; padding: 4px 6px; border-radius: 4px; margin-bottom: 4px;">
+        <span style="color: #000;">V-Desvio:</span>
+        <span style="float: right;">{{foundDeviationVertical}}</span>
+      </div>
+      <div style="background: #ffffcc; padding: 4px 6px; border-radius: 4px;">
+        <span style="color: #000;">V-Ângulo:</span>
+        <span style="float: right;">{{foundAngleVertical}}</span>
+      </div>
+      <div style="text-align: center; margin-top: 10px; margin-bottom: 10px;">
+        <!-- Substituir pelo desenho técnico abaixo -->
+        <img src="https://www.researchgate.net/publication/311809922/figure/fig3/AS:442068519657474@1482408756341/Figura-5-Desalinhamento-e-Alinhamento-de-eixos.png" alt="Alinhamento Motor" style="width: 150px;">
+      </div>
+      <div style="background: #ffffcc; padding: 4px 6px; border-radius: 4px; margin-bottom: 4px;">
+        <span style="color: #000;">H-Desvio:</span>
+        <span style="float: right;">{{foundDeviationHorizontal}}</span>
+      </div>
+      <div style="background: #ffffcc; padding: 4px 6px; border-radius: 4px;">
+        <span style="color: #000;">H-Ângulo:</span>
+        <span style="float: right;">{{foundAngleHorizontal}}</span>
+      </div>
   </div>
-      <div style="width: 100%; border: 1px solid #ccc; padding: 8px; font-family: Arial, sans-serif; font-size: 12px; background: #fff;">
-    <div style="background: #ffffcc; padding: 4px 6px; border-radius: 4px; margin-bottom: 4px;">
-      <span style="color: #000;">V-Desvio:  -0,06 mm</span>
-      <span style="color: green; float: right;">✔</span>
-    </div>
-    <div style="background: #ffffcc; padding: 4px 6px; border-radius: 4px;">
-      <span style="color: #000;">V-Ângulo:  0,01 mm/100</span>
-      <span style="color: green; float: right;">✔</span>
-    </div>
-
-    <div style="text-align: center; margin-top: 10px; margin-bottom: 10px;">
-      <!-- Substituir pelo desenho técnico abaixo -->
-      <img src="https://www.researchgate.net/publication/311809922/figure/fig3/AS:442068519657474@1482408756341/Figura-5-Desalinhamento-e-Alinhamento-de-eixos.png" alt="Alinhamento Motor" style="width: 150px;">
-    </div>
-    <div style="background: #ffffcc; padding: 4px 6px; border-radius: 4px; margin-bottom: 4px;">
-      <span style="color: #000;">H-Desvio:  -0,06 mm</span>
-      <span style="color: green; float: right;">✔</span>
-    </div>
-    <div style="background: #ffffcc; padding: 4px 6px; border-radius: 4px;">
-      <span style="color: #000;">H-Ângulo:  0,01 mm/100</span>
-      <span style="color: green; float: right;">✔</span>
-    </div>
+ <div style="width: 100%; border: 1px solid #ccc; padding: 8px; font-family: Arial, sans-serif; font-size: 12px; background: #fff;">
+      <div style="background: #ffffcc; padding: 4px 6px; border-radius: 4px; margin-bottom: 4px;">
+        <span style="color: #000;">V-Desvio:</span>
+        <span style="float: right;">{{correctedDeviationVertical}}</span>
+      </div>
+      <div style="background: #ffffcc; padding: 4px 6px; border-radius: 4px;">
+        <span style="color: #000;">V-Ângulo:</span>
+        <span style="float: right;">{{correctedAngleVertical}}</span>
+      </div>
+      <div style="text-align: center; margin-top: 10px; margin-bottom: 10px;">
+        <!-- Substituir pelo desenho técnico abaixo -->
+        <img src="https://www.researchgate.net/publication/311809922/figure/fig3/AS:442068519657474@1482408756341/Figura-5-Desalinhamento-e-Alinhamento-de-eixos.png" alt="Alinhamento Motor" style="width: 150px;">
+      </div>
+      <div style="background: #ffffcc; padding: 4px 6px; border-radius: 4px; margin-bottom: 4px;">
+        <span style="color: #000;">H-Desvio:</span>
+        <span style="float: right;">{{correctedDeviationHorizontal}}</span>
+      </div>
+      <div style="background: #ffffcc; padding: 4px 6px; border-radius: 4px;">
+        <span style="color: #000;">H-Ângulo:</span>
+        <span style="float: right;">{{correctedAngleHorizontal}}</span>
+      </div>
   </div>
  </div>
 
   <!-- Fotos da máquina -->
-  <div style="margin-top: 40px;">
     {{photos}}
-  </div>
    </div>
 </body>
 </html>

@@ -19,7 +19,6 @@ export default function PhotoInfoScreen() {
   const { formData, updateFormData } = useForm();
 
   const updateImages = (newImages: string[]) => {
-    console.log("newImages", newImages);
     setImages(newImages);
     updateFormData({
       photos: newImages, // 👈 salva no form
