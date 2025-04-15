@@ -1,5 +1,4 @@
-import { registerUser, loginUser, getUsers } from "./controllers/userController";
+import { registerUser, loginUser, getUsers, getUser } from "./controllers/userController";
 import { upload } from "./controllers/uploadController";
 
-export { registerUser, loginUser, getUsers, upload };
-
+export { registerUser, loginUser, getUsers, getUser, upload };

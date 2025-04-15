@@ -7,7 +7,7 @@ import { verifyToken } from '../middlewares/authMiddleware';
 
 export const registerUser = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     try {
-        const { name, email, password } = JSON.parse(event.body || "{}");
+        const { name, email, password, company } = JSON.parse(event.body || "{}");
 
         const existingUser = await getUserByEmail(email);
         if (existingUser) {
@@ -17,10 +17,10 @@ export const registerUser = async (event: APIGatewayProxyEvent): Promise<APIGate
             };
         }
 
-        const user = await createUser(name, email, password);
+        const user = await createUser(name, email, password, company);
         return {
             statusCode: 201,
-            body: JSON.stringify({ id: user.id, name, email }),
+            body: JSON.stringify({ id: user.id, name, email, company }),
         };
     } catch (error) {
         console.error("Erro no registerUser:", error);
@@ -75,3 +75,40 @@ export async function getUsers(event: any) {
         };
     }
 }
+
+export async function getUser(event: any) {
+    try {
+        const user = verifyToken(event); // valida o token, lança erro se inválido
+
+        const email = event.queryStringParameters?.email;
+        if (!email) {
+            return {
+                statusCode: 400,
+                body: JSON.stringify({ error: "Email é obrigatório na query string" }),
+            };
+        }
+
+        const foundUser = await getUserByEmail(email);
+
+        if (!foundUser) {
+            return {
+                statusCode: 404,
+                body: JSON.stringify({ error: "Usuário não encontrado" }),
+            };
+        }
+
+        // nunca retornar a senha!
+        const { password, ...safeUser } = foundUser;
+
+        return {
+            statusCode: 200,
+            body: JSON.stringify(safeUser),
+        };
+    } catch (err: any) {
+        return {
+            statusCode: 401,
+            body: JSON.stringify({ error: err.message }),
+        };
+    }
+}
+

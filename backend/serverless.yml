@@ -51,6 +51,14 @@ functions:
           method: get
           cors: true
 
+  getUser:
+    handler: src/handler.getUser
+    events:
+      - http:
+          path: api/users/email
+          method: get
+          cors: true
+
   uploadPdf:
     handler: src/handler.upload
     events:
@@ -61,9 +69,11 @@ functions:
 
 plugins:
   - serverless-offline
-  - serverless-esbuild
 
 custom:
+  build:
+    esbuild: false
+
   esbuild:
     bundle: true
     minify: false

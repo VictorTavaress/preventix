@@ -15,7 +15,8 @@ import { useColorScheme } from "~/lib/useColorScheme";
 import { PortalHost } from "@rn-primitives/portal";
 import AvatarDropdown from "~/components/ThemeToggle";
 import { setAndroidNavigationBar } from "~/lib/android-navigation-bar";
-import { FormProvider } from "~/lib/context";
+import { FormProvider } from "~/lib/formContext";
+import { AuthProvider } from "~/lib/authContext";
 
 const LIGHT_THEME: Theme = {
   ...DefaultTheme,
@@ -56,36 +57,38 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={DARK_THEME}>
-      <FormProvider>
-        <StatusBar style={"light"} />
-        <Stack
-          screenOptions={{
-            headerTitle: "",
-            headerBackVisible: true,
-            headerBackTitle: "Voltar",
-          }}
-        >
-          {/* Oculta o header na tela de login */}
-          <Stack.Screen
-            name="login"
-            options={{
-              headerShown: false,
+      <AuthProvider>
+        <FormProvider>
+          <StatusBar style={"light"} />
+          <Stack
+            screenOptions={{
+              headerTitle: "",
+              headerBackVisible: true,
+              headerBackTitle: "Voltar",
             }}
-          />
+          >
+            {/* Oculta o header na tela de login */}
+            <Stack.Screen
+              name="login"
+              options={{
+                headerShown: false,
+              }}
+            />
 
-          {/* Para todas as outras telas, exibe apenas botão de voltar, sem título */}
-          <Stack.Screen
-            name="index"
-            options={{
-              headerShown: true,
-              headerTitle: "", // título vazio
-              headerRight: undefined,
-            }}
-          />
-        </Stack>
+            {/* Para todas as outras telas, exibe apenas botão de voltar, sem título */}
+            <Stack.Screen
+              name="index"
+              options={{
+                headerShown: true,
+                headerTitle: "", // título vazio
+                headerRight: undefined,
+              }}
+            />
+          </Stack>
 
-        <PortalHost />
-      </FormProvider>
+          <PortalHost />
+        </FormProvider>
+      </AuthProvider>
     </ThemeProvider>
   );
 }

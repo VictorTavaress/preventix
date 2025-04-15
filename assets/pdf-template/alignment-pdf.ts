@@ -25,9 +25,17 @@ export const alignmentTemplate = `
     <!-- todo o conteúdo do relatório aqui -->
  
   <!-- Cabeçalho -->
-  <div style="background: rgb(15, 155, 211); padding: 20px 32px; border-radius: 2px; margin-bottom: 20px; color: #fff; text-align: center;">
-    <div style="font-size:16px; font-weight: bold;">Relatório de Alinhamento de Eixo</div>
-    <div style="font-size: 12px; margin-top: 2px;">Alinhamento a Laser</div>
+  <div style="background: rgb(15, 155, 211); padding: 20px 32px; border-radius: 2px; margin-bottom: 20px; color: #fff; position: relative;">
+    <!-- Logo à direita -->
+    <div style="position: absolute; top: 13px; right: 15px;">
+      {{companyLogo}}
+    </div>
+
+    <!-- Texto centralizado -->
+    <div style="text-align: center;">
+      <div style="font-size:16px; font-weight: bold;">Relatório de Alinhamento de Eixo</div>
+      <div style="font-size: 12px; margin-top: 2px;">Alinhamento a Laser</div>
+    </div>
   </div>
 
   <!-- Informações gerais -->

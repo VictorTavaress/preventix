@@ -11,7 +11,7 @@ import {
   Keyboard,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { useForm } from "~/lib/context";
+import { useForm } from "~/lib/formContext";
 
 export default function AssessmentInfosScreen() {
   const router = useRouter();
@@ -84,7 +84,7 @@ export default function AssessmentInfosScreen() {
         {Object.entries(data).map(([key, value]) => (
           <View key={key} className="mb-4">
             <Text className="text-sm mb-1 capitalize">
-            {fieldLabels[key as keyof typeof found]}
+              {fieldLabels[key as keyof typeof found]}
             </Text>
             <View className="flex-row gap-4">
               <TextInput

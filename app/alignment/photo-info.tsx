@@ -10,7 +10,7 @@ import {
 import * as ImagePicker from "expo-image-picker";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import { useForm } from "../../lib/context";
+import { useForm } from "../../lib/formContext";
 import * as ImageManipulator from "expo-image-manipulator";
 
 export default function PhotoInfoScreen() {

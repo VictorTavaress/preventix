@@ -6,13 +6,14 @@ import { PutCommand, QueryCommand, ScanCommand } from "@aws-sdk/lib-dynamodb";
 
 const USERS_TABLE = process.env.USERS_TABLE!;
 
-export async function createUser(name: string, email: string, password: string) {
+export async function createUser(name: string, email: string, password: string, company: string) {
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = {
         id: uuidv4(),
         name,
         email,
         password: hashedPassword,
+        company,
     };
 
     await dynamoDB.send(

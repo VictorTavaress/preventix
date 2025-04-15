@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API_URL } from "./constants";
 import NetInfo from "@react-native-community/netinfo";
-import { saveCredentials, validateOfflineLogin } from "./utils";
+import { saveCredentials, validateOfflineLogin, saveUser } from "./utils";
 
 
 export const api = axios.create({
@@ -61,4 +61,37 @@ export const uploadPdf = async (fileBase64: string, fileName: string, token?: st
         throw new Error("Erro ao enviar o PDF.");
     }
 };
+
+// Função para obter o usuário por e-mail
+export const getUserByEmail = async (email: string, token: string, password: string) => {
+    const net = await NetInfo.fetch();
+    if (net.isConnected) {
+        // 🌐 CONSULTA ONLINE
+        try {
+            const response = await api.get(`/users/email?email=${email}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,  // Passa o token no header
+                },
+            });
+            saveUser(response.data);  // Salva os dados do usuário offline
+            return response.data;  // Retorna os dados do usuário
+        } catch (error) {
+            console.error("Erro ao buscar o usuário:", error);
+            throw new Error("Erro ao buscar o usuário online.");
+        }
+    } else {
+        // 🔒 CONSULTA OFFLINE (se necessário)
+        const user = await validateOfflineLogin(email, password);  // Verifique as credenciais armazenadas offline
+        if (user) {
+            return {
+                token: null,
+                user: { email },
+                offline: true,
+            };
+        } else {
+            throw new Error("Usuário não encontrado offline.");
+        }
+    }
+};
+
 

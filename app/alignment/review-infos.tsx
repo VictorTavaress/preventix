@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-import { useForm } from "../../lib/context";
+import { useForm } from "../../lib/formContext";
 import { Ionicons } from "@expo/vector-icons";
 import { generatePdf } from "../../lib/utils";
 import { alignmentTemplate } from "../../assets/pdf-template/alignment-pdf"; // template em string
@@ -15,10 +15,18 @@ import { router } from "expo-router";
 import NetInfo from "@react-native-community/netinfo";
 import * as FileSystem from "expo-file-system";
 import { api } from "../../lib/api"; // onde está seu axios configurado
-import staticImage from "../../assets/images/base64Static";
+import {
+  staticImage,
+  stratosImage,
+  predimaxImage,
+  preventixImage,
+  senseImage,
+} from "../../assets/images/base64Static";
+import { useAuth } from "../../lib/authContext";
 
 export default function ReviewInfosScreen() {
   const { formData } = useForm();
+  const { user }: any = useAuth(); // Pegando os dados do usuário do contexto
   const general = formData.generalInfo || {};
   const found = formData.alignmentInfo?.found || {};
   const corrected = formData.alignmentInfo?.corrected || {};
@@ -68,6 +76,15 @@ export default function ReviewInfosScreen() {
     const allPhotos = Array.isArray(formData.photos) ? formData.photos : [];
     const firstImage = allPhotos[0] || "";
     const remainingImages = allPhotos.slice(1); // ← Apenas array, sem map nem join
+    let companyLogo = preventixImage; // valor padrão
+
+    if (user?.company?.toLowerCase() === "stratos") {
+      companyLogo = stratosImage;
+    } else if (user?.company?.toLowerCase() === "predimax") {
+      companyLogo = predimaxImage;
+    } else if (user?.company?.toLowerCase() === "sense") {
+      companyLogo = senseImage;
+    }
     try {
       const { isConnected } = await NetInfo.fetch();
 
@@ -140,6 +157,7 @@ export default function ReviewInfosScreen() {
         images: remainingImages,
         firstImage: firstImage,
         staticImage: staticImage,
+        companyLogo,
       });
 
       if (isConnected) {

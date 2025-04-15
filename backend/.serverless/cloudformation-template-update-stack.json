@@ -89,6 +89,12 @@
         "LogGroupName": "/aws/lambda/preventix-api-prod-getUsers"
       }
     },
+    "GetUserLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/preventix-api-prod-getUser"
+      }
+    },
     "UploadPdfLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
@@ -202,7 +208,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/preventix-api/prod/1744143151829-2025-04-08T20:12:31.829Z/preventix-api.zip"
+          "S3Key": "serverless/preventix-api/prod/1744721679069-2025-04-15T12:54:39.069Z/preventix-api.zip"
         },
         "Handler": "src/handler.registerUser",
         "Runtime": "nodejs18.x",
@@ -213,7 +219,8 @@
           "Variables": {
             "USERS_TABLE": "Users",
             "JWT_SECRET": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjA4ZGU5YjcyLWQ2YzItNDZhZi1iNDA4LWRlZjk4MDc2NGIxNSIsImlhdCI6MTc0Mzc5NDA0MywiZXhwIjoxNzQzNzk3NjQzfQ.kM06ObhHzDKbjWsJeH9ofLB-cetLPqiAeOJ_G9MiVNQ",
-            "UPLOADS_BUCKET": "preventix-pdf-upload"
+            "UPLOADS_BUCKET": "preventix-pdf-upload",
+            "NODE_OPTIONS": "--enable-source-maps"
           }
         },
         "Role": {
@@ -234,7 +241,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/preventix-api/prod/1744143151829-2025-04-08T20:12:31.829Z/preventix-api.zip"
+          "S3Key": "serverless/preventix-api/prod/1744721679069-2025-04-15T12:54:39.069Z/preventix-api.zip"
         },
         "Handler": "src/handler.loginUser",
         "Runtime": "nodejs18.x",
@@ -245,7 +252,8 @@
           "Variables": {
             "USERS_TABLE": "Users",
             "JWT_SECRET": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjA4ZGU5YjcyLWQ2YzItNDZhZi1iNDA4LWRlZjk4MDc2NGIxNSIsImlhdCI6MTc0Mzc5NDA0MywiZXhwIjoxNzQzNzk3NjQzfQ.kM06ObhHzDKbjWsJeH9ofLB-cetLPqiAeOJ_G9MiVNQ",
-            "UPLOADS_BUCKET": "preventix-pdf-upload"
+            "UPLOADS_BUCKET": "preventix-pdf-upload",
+            "NODE_OPTIONS": "--enable-source-maps"
           }
         },
         "Role": {
@@ -266,7 +274,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/preventix-api/prod/1744143151829-2025-04-08T20:12:31.829Z/preventix-api.zip"
+          "S3Key": "serverless/preventix-api/prod/1744721679069-2025-04-15T12:54:39.069Z/preventix-api.zip"
         },
         "Handler": "src/handler.getUsers",
         "Runtime": "nodejs18.x",
@@ -277,7 +285,8 @@
           "Variables": {
             "USERS_TABLE": "Users",
             "JWT_SECRET": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjA4ZGU5YjcyLWQ2YzItNDZhZi1iNDA4LWRlZjk4MDc2NGIxNSIsImlhdCI6MTc0Mzc5NDA0MywiZXhwIjoxNzQzNzk3NjQzfQ.kM06ObhHzDKbjWsJeH9ofLB-cetLPqiAeOJ_G9MiVNQ",
-            "UPLOADS_BUCKET": "preventix-pdf-upload"
+            "UPLOADS_BUCKET": "preventix-pdf-upload",
+            "NODE_OPTIONS": "--enable-source-maps"
           }
         },
         "Role": {
@@ -291,6 +300,39 @@
         "GetUsersLogGroup"
       ]
     },
+    "GetUserLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/preventix-api/prod/1744721679069-2025-04-15T12:54:39.069Z/preventix-api.zip"
+        },
+        "Handler": "src/handler.getUser",
+        "Runtime": "nodejs18.x",
+        "FunctionName": "preventix-api-prod-getUser",
+        "MemorySize": 1024,
+        "Timeout": 6,
+        "Environment": {
+          "Variables": {
+            "USERS_TABLE": "Users",
+            "JWT_SECRET": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjA4ZGU5YjcyLWQ2YzItNDZhZi1iNDA4LWRlZjk4MDc2NGIxNSIsImlhdCI6MTc0Mzc5NDA0MywiZXhwIjoxNzQzNzk3NjQzfQ.kM06ObhHzDKbjWsJeH9ofLB-cetLPqiAeOJ_G9MiVNQ",
+            "UPLOADS_BUCKET": "preventix-pdf-upload",
+            "NODE_OPTIONS": "--enable-source-maps"
+          }
+        },
+        "Role": {
+          "Fn::GetAtt": [
+            "IamRoleLambdaExecution",
+            "Arn"
+          ]
+        }
+      },
+      "DependsOn": [
+        "GetUserLogGroup"
+      ]
+    },
     "UploadPdfLambdaFunction": {
       "Type": "AWS::Lambda::Function",
       "Properties": {
@@ -298,7 +340,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/preventix-api/prod/1744143151829-2025-04-08T20:12:31.829Z/preventix-api.zip"
+          "S3Key": "serverless/preventix-api/prod/1744721679069-2025-04-15T12:54:39.069Z/preventix-api.zip"
         },
         "Handler": "src/handler.upload",
         "Runtime": "nodejs18.x",
@@ -309,7 +351,8 @@
           "Variables": {
             "USERS_TABLE": "Users",
             "JWT_SECRET": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjA4ZGU5YjcyLWQ2YzItNDZhZi1iNDA4LWRlZjk4MDc2NGIxNSIsImlhdCI6MTc0Mzc5NDA0MywiZXhwIjoxNzQzNzk3NjQzfQ.kM06ObhHzDKbjWsJeH9ofLB-cetLPqiAeOJ_G9MiVNQ",
-            "UPLOADS_BUCKET": "preventix-pdf-upload"
+            "UPLOADS_BUCKET": "preventix-pdf-upload",
+            "NODE_OPTIONS": "--enable-source-maps"
           }
         },
         "Role": {
@@ -323,44 +366,54 @@
         "UploadPdfLogGroup"
       ]
     },
-    "RegisterUserLambdaVersionnSRfWxVSkMGnhoAcb0rkg3tvYRXMVjSO4cmw5RO3AkA": {
+    "RegisterUserLambdaVersionQgNVhWrNKDyhZxRPWvaYGhVW4pw4ox4LPKWTSY9HVMA": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "RegisterUserLambdaFunction"
         },
-        "CodeSha256": "fpdoe6i8kIxGzOnKd1I92S5nrHvpCiLsBjZKu0dWJpQ="
+        "CodeSha256": "SlNKRY/DBwqB5GWO2hQXR0FO+pE3I+V09ngipHgjCRE="
       }
     },
-    "LoginUserLambdaVersion3nBS60UyvGZ6WX8fjS9GwvEBt1GcLrBt7aQkj480AU": {
+    "LoginUserLambdaVersionvxbY5W0NaU3iYubSTOHqOBld9ARQTldKwulE3jq4w": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "LoginUserLambdaFunction"
         },
-        "CodeSha256": "fpdoe6i8kIxGzOnKd1I92S5nrHvpCiLsBjZKu0dWJpQ="
+        "CodeSha256": "SlNKRY/DBwqB5GWO2hQXR0FO+pE3I+V09ngipHgjCRE="
       }
     },
-    "GetUsersLambdaVersionKLekQXfv31fwmgiwTuoRRoSUROjP1T6L43KUjcEFFLw": {
+    "GetUsersLambdaVersiontLq7iwGoPytyjCXzn81yghr8Jo70CTEXRYkPGT6GRt0": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetUsersLambdaFunction"
         },
-        "CodeSha256": "fpdoe6i8kIxGzOnKd1I92S5nrHvpCiLsBjZKu0dWJpQ="
+        "CodeSha256": "SlNKRY/DBwqB5GWO2hQXR0FO+pE3I+V09ngipHgjCRE="
       }
     },
-    "UploadPdfLambdaVersion6ccLkBCp2BKNloJxqfxJtBawiODT949GoIEv4l3d5d8": {
+    "GetUserLambdaVersionJTyBLc7aNwU7BRvtdvoHRrjAq0qf7fgiPcTHRH5E": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "GetUserLambdaFunction"
+        },
+        "CodeSha256": "SlNKRY/DBwqB5GWO2hQXR0FO+pE3I+V09ngipHgjCRE="
+      }
+    },
+    "UploadPdfLambdaVersionIwxyD246djHPeubGpJ4FyFnKENAvGKwuFYADh01JWz4": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UploadPdfLambdaFunction"
         },
-        "CodeSha256": "fpdoe6i8kIxGzOnKd1I92S5nrHvpCiLsBjZKu0dWJpQ="
+        "CodeSha256": "SlNKRY/DBwqB5GWO2hQXR0FO+pE3I+V09ngipHgjCRE="
       }
     },
     "ApiGatewayRestApi": {
@@ -421,6 +474,18 @@
           "Ref": "ApiGatewayResourceApiUsers"
         },
         "PathPart": "login",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayResourceApiUsersEmail": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayResourceApiUsers"
+        },
+        "PathPart": "email",
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
@@ -567,6 +632,51 @@
         },
         "ResourceId": {
           "Ref": "ApiGatewayResourceApiUsers"
+        },
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayMethodApiUsersEmailOptions": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "OPTIONS",
+        "MethodResponses": [
+          {
+            "StatusCode": "200",
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true
+            },
+            "ResponseModels": {}
+          }
+        ],
+        "RequestParameters": {},
+        "Integration": {
+          "Type": "MOCK",
+          "RequestTemplates": {
+            "application/json": "{statusCode:200}"
+          },
+          "ContentHandling": "CONVERT_TO_TEXT",
+          "IntegrationResponses": [
+            {
+              "StatusCode": "200",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET'"
+              },
+              "ResponseTemplates": {
+                "application/json": ""
+              }
+            }
+          ]
+        },
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceApiUsersEmail"
         },
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
@@ -756,6 +866,52 @@
         "GetUsersLambdaPermissionApiGateway"
       ]
     },
+    "ApiGatewayMethodApiUsersEmailGet": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "GET",
+        "RequestParameters": {},
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceApiUsersEmail"
+        },
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        },
+        "ApiKeyRequired": false,
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":apigateway:",
+                {
+                  "Ref": "AWS::Region"
+                },
+                ":lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "GetUserLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        },
+        "MethodResponses": []
+      },
+      "DependsOn": [
+        "GetUserLambdaPermissionApiGateway"
+      ]
+    },
     "ApiGatewayMethodApiUploadPost": {
       "Type": "AWS::ApiGateway::Method",
       "Properties": {
@@ -802,7 +958,7 @@
         "UploadPdfLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayDeployment1744143149564": {
+    "ApiGatewayDeployment1744721674753": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -814,10 +970,12 @@
         "ApiGatewayMethodApiUsersRegisterOptions",
         "ApiGatewayMethodApiUsersLoginOptions",
         "ApiGatewayMethodApiUsersOptions",
+        "ApiGatewayMethodApiUsersEmailOptions",
         "ApiGatewayMethodApiUploadOptions",
         "ApiGatewayMethodApiUsersRegisterPost",
         "ApiGatewayMethodApiUsersLoginPost",
         "ApiGatewayMethodApiUsersGet",
+        "ApiGatewayMethodApiUsersEmailGet",
         "ApiGatewayMethodApiUploadPost"
       ]
     },
@@ -932,6 +1090,43 @@
         }
       }
     },
+    "GetUserLambdaPermissionApiGateway": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "GetUserLambdaFunction",
+            "Arn"
+          ]
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region"
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":",
+              {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "/*/*"
+            ]
+          ]
+        }
+      }
+    },
     "UploadPdfLambdaPermissionApiGateway": {
       "Type": "AWS::Lambda::Permission",
       "Properties": {
@@ -982,7 +1177,7 @@
     "RegisterUserLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "RegisterUserLambdaVersionnSRfWxVSkMGnhoAcb0rkg3tvYRXMVjSO4cmw5RO3AkA"
+        "Ref": "RegisterUserLambdaVersionQgNVhWrNKDyhZxRPWvaYGhVW4pw4ox4LPKWTSY9HVMA"
       },
       "Export": {
         "Name": "sls-preventix-api-prod-RegisterUserLambdaFunctionQualifiedArn"
@@ -991,7 +1186,7 @@
     "LoginUserLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "LoginUserLambdaVersion3nBS60UyvGZ6WX8fjS9GwvEBt1GcLrBt7aQkj480AU"
+        "Ref": "LoginUserLambdaVersionvxbY5W0NaU3iYubSTOHqOBld9ARQTldKwulE3jq4w"
       },
       "Export": {
         "Name": "sls-preventix-api-prod-LoginUserLambdaFunctionQualifiedArn"
@@ -1000,16 +1195,25 @@
     "GetUsersLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetUsersLambdaVersionKLekQXfv31fwmgiwTuoRRoSUROjP1T6L43KUjcEFFLw"
+        "Ref": "GetUsersLambdaVersiontLq7iwGoPytyjCXzn81yghr8Jo70CTEXRYkPGT6GRt0"
       },
       "Export": {
         "Name": "sls-preventix-api-prod-GetUsersLambdaFunctionQualifiedArn"
       }
     },
+    "GetUserLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "GetUserLambdaVersionJTyBLc7aNwU7BRvtdvoHRrjAq0qf7fgiPcTHRH5E"
+      },
+      "Export": {
+        "Name": "sls-preventix-api-prod-GetUserLambdaFunctionQualifiedArn"
+      }
+    },
     "UploadPdfLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UploadPdfLambdaVersion6ccLkBCp2BKNloJxqfxJtBawiODT949GoIEv4l3d5d8"
+        "Ref": "UploadPdfLambdaVersionIwxyD246djHPeubGpJ4FyFnKENAvGKwuFYADh01JWz4"
       },
       "Export": {
         "Name": "sls-preventix-api-prod-UploadPdfLambdaFunctionQualifiedArn"

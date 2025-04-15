@@ -36,7 +36,7 @@ export default function ModeSelectionScreen() {
   return (
     <View className="flex-1 items-center justify-center bg-[#0D0D1B] px-6">
       <Image
-        source={require("assets/images/Headline.png")}
+        source={require("assets/images/logotipopreventix.png")}
         className="w-52 h-16 mb-12"
         resizeMode="contain"
       />

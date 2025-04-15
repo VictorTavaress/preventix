@@ -9,8 +9,10 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import NetInfo from "@react-native-community/netinfo";
-import { login } from "~/lib/api";
+import { login, getUserByEmail } from "~/lib/api";
 import { useRouter } from "expo-router";
+import { useAuth } from "~/lib/authContext";
+import { getSavedUser } from "~/lib/utils";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
@@ -19,6 +21,7 @@ export default function LoginScreen() {
   const [loading, setLoading] = useState(false);
   const [isOnline, setIsOnline] = useState<boolean | null>(null);
   const router = useRouter();
+  const { setUser } = useAuth(); // Usando o setEmail do contexto
 
   // Verifica conectividade
   useEffect(() => {
@@ -33,6 +36,13 @@ export default function LoginScreen() {
     setLoading(true);
     try {
       const data = await login(email, password);
+      const user = await getUserByEmail(email, data.token, password);
+      if (user.offline) {
+        const userOffline = await getSavedUser();
+        setUser(userOffline);
+      } else {
+        setUser(user);
+      }
       router.push("/mode-selection");
     } catch (error) {
       Alert.alert("Erro ao entrar", String(error));
@@ -43,7 +53,7 @@ export default function LoginScreen() {
   return (
     <View className="flex-1 justify-center items-center bg-[#0D0D1B]">
       <Image
-        source={require("assets/images/Headline.png")}
+        source={require("assets/images/logotipopreventix.png")}
         className="w-96 h-12 mb-12"
         resizeMode="contain"
       />

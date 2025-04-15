@@ -12,7 +12,8 @@ import {
   Keyboard,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { useForm } from "~/lib/context";
+import { useForm } from "~/lib/formContext";
+import { useAuth } from "~/lib/authContext";
 import {
   Select,
   SelectTrigger,
@@ -34,11 +35,14 @@ export default function GeneralInfoScreen() {
 
   const router = useRouter();
   const { updateFormData } = useForm();
+  const { user }: any = useAuth(); // Pegando os dados do usuário do contexto
+
+  // Inicializa com o nome do operador se disponível, caso contrário, vazio
+  const [operator, setOperator] = useState(user?.name || "");
 
   const [machineId, setMachineId] = useState("");
   const [company, setCompany] = useState("");
   const [date, setDate] = useState(getTodayFormatted());
-  const [operator, setOperator] = useState("");
   const [notes, setNotes] = useState("");
   const [speed, setSpeed] = useState("");
   const [deviation, setDeviation] = useState("");
@@ -179,7 +183,7 @@ export default function GeneralInfoScreen() {
           <TextInput
             value={operator}
             onChangeText={setOperator}
-            placeholder="Operador"
+            placeholder={user?.name ? `Operador: ${user.name}` : "Operador"}
             className="bg-white px-4 py-3 rounded mb-4"
           />
 
@@ -215,7 +219,11 @@ export default function GeneralInfoScreen() {
               <SelectGroup>
                 <SelectLabel>Faixas de RPM</SelectLabel>
                 {rpmOptions.map((option) => (
-                  <SelectItem key={option.value} value={option.value} label={option.label}>
+                  <SelectItem
+                    key={option.value}
+                    value={option.value}
+                    label={option.label}
+                  >
                     {option.label}
                   </SelectItem>
                 ))}

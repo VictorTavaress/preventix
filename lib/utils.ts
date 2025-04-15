@@ -4,7 +4,6 @@ import * as Print from 'expo-print';
 import * as SecureStore from "expo-secure-store";
 import * as Crypto from "expo-crypto";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as FileSystem from 'expo-file-system';
 
 interface GeneratePdfParams {
   htmlTemplate: any;
@@ -15,9 +14,13 @@ interface GeneratePdfParams {
   onFinish?: (uri: string) => void;
   firstImage?: string;
   staticImage?: string; // base64 ou caminho local
+  companyLogo?: string; // base64 ou caminho local
 }
 
 export const hashPassword = async (password: string) => {
+  if (!password || typeof password !== 'string') {
+    throw new Error("Senha inválida para hash.");
+  }
   return await Crypto.digestStringAsync(
     Crypto.CryptoDigestAlgorithm.SHA256,
     password
@@ -39,6 +42,24 @@ export const validateOfflineLogin = async (email: string, password: string) => {
   return email === savedEmail && inputHashed === hashed;
 };
 
+export const saveUser = async (user: any) => {
+  try {
+    await AsyncStorage.setItem("user_data", JSON.stringify(user));
+  } catch (err) {
+    console.error("Erro ao salvar dados do usuário offline:", err);
+  }
+};
+
+export const getSavedUser = async () => {
+  try {
+    const user = await AsyncStorage.getItem("user_data");
+    return user ? JSON.parse(user) : null;
+
+  } catch (err) {
+    console.error("Erro ao recuperar dados do usuário offline:", err);
+    return null;
+  }
+};
 
 export async function clearCredentials() {
   await SecureStore.deleteItemAsync("user_email");
@@ -57,6 +78,7 @@ export async function generatePdf({
   onFinish,
   firstImage = '',
   staticImage = '',
+  companyLogo = '',
 }: GeneratePdfParams) {
   try {
     let html = htmlTemplate;
@@ -72,6 +94,13 @@ export async function generatePdf({
       html = html.replace('{{firstImage}}', firstImageHTML);
     } else {
       html = html.replace('{{firstImage}}', '');
+    }
+
+    if (companyLogo) {
+      const companyLogoHTML = `<img src="${companyLogo}" alt="Foto da máquina" style="max-width: 50px; max-height: 50px; border: 1px solid #ccc; border-radius: 4px; object-fit: cover;" />`;
+      html = html.replace('{{companyLogo}}', companyLogoHTML);
+    } else {
+      html = html.replace('{{companyLogo}}', '');
     }
 
     // Substitui imagem estática (staticImage)
