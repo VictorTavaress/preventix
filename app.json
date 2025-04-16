@@ -10,7 +10,7 @@
     "newArchEnabled": true,
     "owner": "victortavares",
     "splash": {
-      "image": "./assets/images/iconpreventix.png",
+      "image": "./assets/images/logotipopreventix.png",
       "resizeMode": "contain",
       "backgroundColor": "#0D0D1B"
     },
@@ -19,7 +19,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.suaempresa.preventix",
+      "bundleIdentifier": "com.preventix.app",
       "buildNumber": "1.0.0",
       "infoPlist": {
         "NSCameraUsageDescription": "Este aplicativo requer acesso à câmera para tirar fotos.",
