@@ -4,10 +4,11 @@
     "slug": "preventix",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/logotipopreventix.png",
+    "icon": "./assets/images/P.png",
     "scheme": "myapp",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
+    "owner": "victortavares",
     "splash": {
       "image": "./assets/images/iconpreventix.png",
       "resizeMode": "contain",
@@ -22,7 +23,8 @@
       "buildNumber": "1.0.0",
       "infoPlist": {
         "NSCameraUsageDescription": "Este aplicativo requer acesso à câmera para tirar fotos.",
-        "NSPhotoLibraryUsageDescription": "Este aplicativo requer acesso à sua biblioteca de fotos."
+        "NSPhotoLibraryUsageDescription": "Este aplicativo requer acesso à sua biblioteca de fotos.",
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
@@ -43,6 +45,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "8524e934-f28f-4f5b-81d8-aef651598e95"
+      }
     }
   }
 }
