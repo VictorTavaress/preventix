@@ -7,7 +7,50 @@ import { verifyToken } from '../middlewares/authMiddleware';
 
 export const registerUser = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     try {
-        const { name, email, password, company } = JSON.parse(event.body || "{}");
+        const body = JSON.parse(event.body || "{}");
+
+        let name = "";
+        let email = "";
+        let password = "";
+        let company = "";
+
+        if ("eventType" in body && body.eventType === "FORM_RESPONSE") {
+            const fields = body.data?.fields || [];
+
+            const normalize = (str: string) => str?.trim().toLowerCase();
+
+            const getFieldValue = (label: string) => {
+                const field = fields.find((f: any) => normalize(f.label) === normalize(label));
+
+                if (!field) return null;
+
+                if (field.type === "MULTIPLE_CHOICE") {
+                    const selectedId = field.value?.[0];
+                    const selectedOption = field.options?.find((opt: any) => opt.id === selectedId);
+                    return selectedOption?.text || selectedId;
+                }
+
+                return field.value;
+            };
+
+            name = getFieldValue("Nome");
+            email = getFieldValue("Email");
+            password = getFieldValue("Senha");
+            company = getFieldValue("Qual sua empresa?");
+        } else {
+            // Primeiro formato
+            name = body.name;
+            email = body.email;
+            password = body.password;
+            company = body.company;
+        }
+
+        if (!name || !email || !password || !company) {
+            return {
+                statusCode: 400,
+                body: JSON.stringify({ error: "Campos obrigatórios ausentes" }),
+            };
+        }
 
         const existingUser = await getUserByEmail(email);
         if (existingUser) {
@@ -18,6 +61,7 @@ export const registerUser = async (event: APIGatewayProxyEvent): Promise<APIGate
         }
 
         const user = await createUser(name, email, password, company);
+
         return {
             statusCode: 201,
             body: JSON.stringify({ id: user.id, name, email, company }),

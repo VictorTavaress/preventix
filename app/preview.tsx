@@ -74,9 +74,21 @@ export default function PdfPreviewScreen() {
         fileUri
       );
       const result = await downloadResumable.downloadAsync();
+
       if (result && result.uri) {
         setLocalPath(result.uri);
         Alert.alert("Download", "PDF baixado com sucesso.");
+
+        // 🔓 Abre o PDF automaticamente após o download
+        if (Platform.OS === "android") {
+          IntentLauncher.startActivityAsync("android.intent.action.VIEW", {
+            data: result.uri,
+            flags: 1,
+            type: "application/pdf",
+          });
+        } else if (await Sharing.isAvailableAsync()) {
+          await Sharing.shareAsync(result.uri);
+        }
       } else {
         throw new Error("Download result is undefined or invalid.");
       }

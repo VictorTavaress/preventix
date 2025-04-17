@@ -1,6 +1,6 @@
 {
   "/home/usuario/preventix/backend/serverless.yml": {
-    "versionFramework": "4.12.0",
+    "versionFramework": "4.13.0",
     "servicePath": "/home/usuario/preventix/backend/serverless.yml",
     "serviceConfigFileName": "serverless.yml",
     "service": {
@@ -250,7 +250,7 @@
                   "S3Bucket": {
                     "Ref": "ServerlessDeploymentBucket"
                   },
-                  "S3Key": "serverless/preventix-api/prod/1744721679069-2025-04-15T12:54:39.069Z/preventix-api.zip"
+                  "S3Key": "serverless/preventix-api/prod/1744835220264-2025-04-16T20:27:00.264Z/preventix-api.zip"
                 },
                 "Handler": "src/handler.registerUser",
                 "Runtime": "nodejs18.x",
@@ -283,7 +283,7 @@
                   "S3Bucket": {
                     "Ref": "ServerlessDeploymentBucket"
                   },
-                  "S3Key": "serverless/preventix-api/prod/1744721679069-2025-04-15T12:54:39.069Z/preventix-api.zip"
+                  "S3Key": "serverless/preventix-api/prod/1744835220264-2025-04-16T20:27:00.264Z/preventix-api.zip"
                 },
                 "Handler": "src/handler.loginUser",
                 "Runtime": "nodejs18.x",
@@ -316,7 +316,7 @@
                   "S3Bucket": {
                     "Ref": "ServerlessDeploymentBucket"
                   },
-                  "S3Key": "serverless/preventix-api/prod/1744721679069-2025-04-15T12:54:39.069Z/preventix-api.zip"
+                  "S3Key": "serverless/preventix-api/prod/1744835220264-2025-04-16T20:27:00.264Z/preventix-api.zip"
                 },
                 "Handler": "src/handler.getUsers",
                 "Runtime": "nodejs18.x",
@@ -349,7 +349,7 @@
                   "S3Bucket": {
                     "Ref": "ServerlessDeploymentBucket"
                   },
-                  "S3Key": "serverless/preventix-api/prod/1744721679069-2025-04-15T12:54:39.069Z/preventix-api.zip"
+                  "S3Key": "serverless/preventix-api/prod/1744835220264-2025-04-16T20:27:00.264Z/preventix-api.zip"
                 },
                 "Handler": "src/handler.getUser",
                 "Runtime": "nodejs18.x",
@@ -382,7 +382,7 @@
                   "S3Bucket": {
                     "Ref": "ServerlessDeploymentBucket"
                   },
-                  "S3Key": "serverless/preventix-api/prod/1744721679069-2025-04-15T12:54:39.069Z/preventix-api.zip"
+                  "S3Key": "serverless/preventix-api/prod/1744835220264-2025-04-16T20:27:00.264Z/preventix-api.zip"
                 },
                 "Handler": "src/handler.upload",
                 "Runtime": "nodejs18.x",
@@ -408,54 +408,54 @@
                 "UploadPdfLogGroup"
               ]
             },
-            "RegisterUserLambdaVersionQgNVhWrNKDyhZxRPWvaYGhVW4pw4ox4LPKWTSY9HVMA": {
+            "RegisterUserLambdaVersionG1k33sVwpLnalTge8ERQPdoDc2NoejI5tzonNn7A": {
               "Type": "AWS::Lambda::Version",
               "DeletionPolicy": "Retain",
               "Properties": {
                 "FunctionName": {
                   "Ref": "RegisterUserLambdaFunction"
                 },
-                "CodeSha256": "SlNKRY/DBwqB5GWO2hQXR0FO+pE3I+V09ngipHgjCRE="
+                "CodeSha256": "v9BtTXubPvT8HaMjEJpXyLugQvFQd5xmjJEaPfvW7wY="
               }
             },
-            "LoginUserLambdaVersionvxbY5W0NaU3iYubSTOHqOBld9ARQTldKwulE3jq4w": {
+            "LoginUserLambdaVersion8ri6tiR9upXo6DI4lakDSQvbXqMknu11msAiUEVH48Y": {
               "Type": "AWS::Lambda::Version",
               "DeletionPolicy": "Retain",
               "Properties": {
                 "FunctionName": {
                   "Ref": "LoginUserLambdaFunction"
                 },
-                "CodeSha256": "SlNKRY/DBwqB5GWO2hQXR0FO+pE3I+V09ngipHgjCRE="
+                "CodeSha256": "v9BtTXubPvT8HaMjEJpXyLugQvFQd5xmjJEaPfvW7wY="
               }
             },
-            "GetUsersLambdaVersiontLq7iwGoPytyjCXzn81yghr8Jo70CTEXRYkPGT6GRt0": {
+            "GetUsersLambdaVersionemdvwNfCKQOWHWWd8Ov2aEDzuPSJMrNuGjHZS6kGE": {
               "Type": "AWS::Lambda::Version",
               "DeletionPolicy": "Retain",
               "Properties": {
                 "FunctionName": {
                   "Ref": "GetUsersLambdaFunction"
                 },
-                "CodeSha256": "SlNKRY/DBwqB5GWO2hQXR0FO+pE3I+V09ngipHgjCRE="
+                "CodeSha256": "v9BtTXubPvT8HaMjEJpXyLugQvFQd5xmjJEaPfvW7wY="
               }
             },
-            "GetUserLambdaVersionJTyBLc7aNwU7BRvtdvoHRrjAq0qf7fgiPcTHRH5E": {
+            "GetUserLambdaVersionsnqRV4ca18hMPy2qeU8IDBgnHdZZLGG5oEUwXEQnfNI": {
               "Type": "AWS::Lambda::Version",
               "DeletionPolicy": "Retain",
               "Properties": {
                 "FunctionName": {
                   "Ref": "GetUserLambdaFunction"
                 },
-                "CodeSha256": "SlNKRY/DBwqB5GWO2hQXR0FO+pE3I+V09ngipHgjCRE="
+                "CodeSha256": "v9BtTXubPvT8HaMjEJpXyLugQvFQd5xmjJEaPfvW7wY="
               }
             },
-            "UploadPdfLambdaVersionIwxyD246djHPeubGpJ4FyFnKENAvGKwuFYADh01JWz4": {
+            "UploadPdfLambdaVersionbe4l9rPGAmVUFUjtoQ2X4ZDdoWIPIQAEN4LvY4oMx88": {
               "Type": "AWS::Lambda::Version",
               "DeletionPolicy": "Retain",
               "Properties": {
                 "FunctionName": {
                   "Ref": "UploadPdfLambdaFunction"
                 },
-                "CodeSha256": "SlNKRY/DBwqB5GWO2hQXR0FO+pE3I+V09ngipHgjCRE="
+                "CodeSha256": "v9BtTXubPvT8HaMjEJpXyLugQvFQd5xmjJEaPfvW7wY="
               }
             },
             "ApiGatewayRestApi": {
@@ -1000,7 +1000,7 @@
                 "UploadPdfLambdaPermissionApiGateway"
               ]
             },
-            "ApiGatewayDeployment1744721674753": {
+            "ApiGatewayDeployment1744835215340": {
               "Type": "AWS::ApiGateway::Deployment",
               "Properties": {
                 "RestApiId": {
@@ -1219,7 +1219,7 @@
             "RegisterUserLambdaFunctionQualifiedArn": {
               "Description": "Current Lambda function version",
               "Value": {
-                "Ref": "RegisterUserLambdaVersionQgNVhWrNKDyhZxRPWvaYGhVW4pw4ox4LPKWTSY9HVMA"
+                "Ref": "RegisterUserLambdaVersionG1k33sVwpLnalTge8ERQPdoDc2NoejI5tzonNn7A"
               },
               "Export": {
                 "Name": "sls-preventix-api-prod-RegisterUserLambdaFunctionQualifiedArn"
@@ -1228,7 +1228,7 @@
             "LoginUserLambdaFunctionQualifiedArn": {
               "Description": "Current Lambda function version",
               "Value": {
-                "Ref": "LoginUserLambdaVersionvxbY5W0NaU3iYubSTOHqOBld9ARQTldKwulE3jq4w"
+                "Ref": "LoginUserLambdaVersion8ri6tiR9upXo6DI4lakDSQvbXqMknu11msAiUEVH48Y"
               },
               "Export": {
                 "Name": "sls-preventix-api-prod-LoginUserLambdaFunctionQualifiedArn"
@@ -1237,7 +1237,7 @@
             "GetUsersLambdaFunctionQualifiedArn": {
               "Description": "Current Lambda function version",
               "Value": {
-                "Ref": "GetUsersLambdaVersiontLq7iwGoPytyjCXzn81yghr8Jo70CTEXRYkPGT6GRt0"
+                "Ref": "GetUsersLambdaVersionemdvwNfCKQOWHWWd8Ov2aEDzuPSJMrNuGjHZS6kGE"
               },
               "Export": {
                 "Name": "sls-preventix-api-prod-GetUsersLambdaFunctionQualifiedArn"
@@ -1246,7 +1246,7 @@
             "GetUserLambdaFunctionQualifiedArn": {
               "Description": "Current Lambda function version",
               "Value": {
-                "Ref": "GetUserLambdaVersionJTyBLc7aNwU7BRvtdvoHRrjAq0qf7fgiPcTHRH5E"
+                "Ref": "GetUserLambdaVersionsnqRV4ca18hMPy2qeU8IDBgnHdZZLGG5oEUwXEQnfNI"
               },
               "Export": {
                 "Name": "sls-preventix-api-prod-GetUserLambdaFunctionQualifiedArn"
@@ -1255,7 +1255,7 @@
             "UploadPdfLambdaFunctionQualifiedArn": {
               "Description": "Current Lambda function version",
               "Value": {
-                "Ref": "UploadPdfLambdaVersionIwxyD246djHPeubGpJ4FyFnKENAvGKwuFYADh01JWz4"
+                "Ref": "UploadPdfLambdaVersionbe4l9rPGAmVUFUjtoQ2X4ZDdoWIPIQAEN4LvY4oMx88"
               },
               "Export": {
                 "Name": "sls-preventix-api-prod-UploadPdfLambdaFunctionQualifiedArn"
@@ -1411,7 +1411,7 @@
           "timeout": 6,
           "runtime": "nodejs18.x",
           "vpc": {},
-          "versionLogicalId": "RegisterUserLambdaVersionQgNVhWrNKDyhZxRPWvaYGhVW4pw4ox4LPKWTSY9HVMA"
+          "versionLogicalId": "RegisterUserLambdaVersionG1k33sVwpLnalTge8ERQPdoDc2NoejI5tzonNn7A"
         },
         "loginUser": {
           "handler": "src/handler.loginUser",
@@ -1450,7 +1450,7 @@
           "timeout": 6,
           "runtime": "nodejs18.x",
           "vpc": {},
-          "versionLogicalId": "LoginUserLambdaVersionvxbY5W0NaU3iYubSTOHqOBld9ARQTldKwulE3jq4w"
+          "versionLogicalId": "LoginUserLambdaVersion8ri6tiR9upXo6DI4lakDSQvbXqMknu11msAiUEVH48Y"
         },
         "getUsers": {
           "handler": "src/handler.getUsers",
@@ -1489,7 +1489,7 @@
           "timeout": 6,
           "runtime": "nodejs18.x",
           "vpc": {},
-          "versionLogicalId": "GetUsersLambdaVersiontLq7iwGoPytyjCXzn81yghr8Jo70CTEXRYkPGT6GRt0"
+          "versionLogicalId": "GetUsersLambdaVersionemdvwNfCKQOWHWWd8Ov2aEDzuPSJMrNuGjHZS6kGE"
         },
         "getUser": {
           "handler": "src/handler.getUser",
@@ -1528,7 +1528,7 @@
           "timeout": 6,
           "runtime": "nodejs18.x",
           "vpc": {},
-          "versionLogicalId": "GetUserLambdaVersionJTyBLc7aNwU7BRvtdvoHRrjAq0qf7fgiPcTHRH5E"
+          "versionLogicalId": "GetUserLambdaVersionsnqRV4ca18hMPy2qeU8IDBgnHdZZLGG5oEUwXEQnfNI"
         },
         "uploadPdf": {
           "handler": "src/handler.upload",
@@ -1567,7 +1567,7 @@
           "timeout": 6,
           "runtime": "nodejs18.x",
           "vpc": {},
-          "versionLogicalId": "UploadPdfLambdaVersionIwxyD246djHPeubGpJ4FyFnKENAvGKwuFYADh01JWz4"
+          "versionLogicalId": "UploadPdfLambdaVersionbe4l9rPGAmVUFUjtoQ2X4ZDdoWIPIQAEN4LvY4oMx88"
         }
       },
       "plugins": [
@@ -1842,7 +1842,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/preventix-api/prod/1744721679069-2025-04-15T12:54:39.069Z/preventix-api.zip"
+                "S3Key": "serverless/preventix-api/prod/1744835220264-2025-04-16T20:27:00.264Z/preventix-api.zip"
               },
               "Handler": "src/handler.registerUser",
               "Runtime": "nodejs18.x",
@@ -1875,7 +1875,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/preventix-api/prod/1744721679069-2025-04-15T12:54:39.069Z/preventix-api.zip"
+                "S3Key": "serverless/preventix-api/prod/1744835220264-2025-04-16T20:27:00.264Z/preventix-api.zip"
               },
               "Handler": "src/handler.loginUser",
               "Runtime": "nodejs18.x",
@@ -1908,7 +1908,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/preventix-api/prod/1744721679069-2025-04-15T12:54:39.069Z/preventix-api.zip"
+                "S3Key": "serverless/preventix-api/prod/1744835220264-2025-04-16T20:27:00.264Z/preventix-api.zip"
               },
               "Handler": "src/handler.getUsers",
               "Runtime": "nodejs18.x",
@@ -1941,7 +1941,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/preventix-api/prod/1744721679069-2025-04-15T12:54:39.069Z/preventix-api.zip"
+                "S3Key": "serverless/preventix-api/prod/1744835220264-2025-04-16T20:27:00.264Z/preventix-api.zip"
               },
               "Handler": "src/handler.getUser",
               "Runtime": "nodejs18.x",
@@ -1974,7 +1974,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/preventix-api/prod/1744721679069-2025-04-15T12:54:39.069Z/preventix-api.zip"
+                "S3Key": "serverless/preventix-api/prod/1744835220264-2025-04-16T20:27:00.264Z/preventix-api.zip"
               },
               "Handler": "src/handler.upload",
               "Runtime": "nodejs18.x",
@@ -2000,54 +2000,54 @@
               "UploadPdfLogGroup"
             ]
           },
-          "RegisterUserLambdaVersionQgNVhWrNKDyhZxRPWvaYGhVW4pw4ox4LPKWTSY9HVMA": {
+          "RegisterUserLambdaVersionG1k33sVwpLnalTge8ERQPdoDc2NoejI5tzonNn7A": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "RegisterUserLambdaFunction"
               },
-              "CodeSha256": "SlNKRY/DBwqB5GWO2hQXR0FO+pE3I+V09ngipHgjCRE="
+              "CodeSha256": "v9BtTXubPvT8HaMjEJpXyLugQvFQd5xmjJEaPfvW7wY="
             }
           },
-          "LoginUserLambdaVersionvxbY5W0NaU3iYubSTOHqOBld9ARQTldKwulE3jq4w": {
+          "LoginUserLambdaVersion8ri6tiR9upXo6DI4lakDSQvbXqMknu11msAiUEVH48Y": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "LoginUserLambdaFunction"
               },
-              "CodeSha256": "SlNKRY/DBwqB5GWO2hQXR0FO+pE3I+V09ngipHgjCRE="
+              "CodeSha256": "v9BtTXubPvT8HaMjEJpXyLugQvFQd5xmjJEaPfvW7wY="
             }
           },
-          "GetUsersLambdaVersiontLq7iwGoPytyjCXzn81yghr8Jo70CTEXRYkPGT6GRt0": {
+          "GetUsersLambdaVersionemdvwNfCKQOWHWWd8Ov2aEDzuPSJMrNuGjHZS6kGE": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetUsersLambdaFunction"
               },
-              "CodeSha256": "SlNKRY/DBwqB5GWO2hQXR0FO+pE3I+V09ngipHgjCRE="
+              "CodeSha256": "v9BtTXubPvT8HaMjEJpXyLugQvFQd5xmjJEaPfvW7wY="
             }
           },
-          "GetUserLambdaVersionJTyBLc7aNwU7BRvtdvoHRrjAq0qf7fgiPcTHRH5E": {
+          "GetUserLambdaVersionsnqRV4ca18hMPy2qeU8IDBgnHdZZLGG5oEUwXEQnfNI": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetUserLambdaFunction"
               },
-              "CodeSha256": "SlNKRY/DBwqB5GWO2hQXR0FO+pE3I+V09ngipHgjCRE="
+              "CodeSha256": "v9BtTXubPvT8HaMjEJpXyLugQvFQd5xmjJEaPfvW7wY="
             }
           },
-          "UploadPdfLambdaVersionIwxyD246djHPeubGpJ4FyFnKENAvGKwuFYADh01JWz4": {
+          "UploadPdfLambdaVersionbe4l9rPGAmVUFUjtoQ2X4ZDdoWIPIQAEN4LvY4oMx88": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "UploadPdfLambdaFunction"
               },
-              "CodeSha256": "SlNKRY/DBwqB5GWO2hQXR0FO+pE3I+V09ngipHgjCRE="
+              "CodeSha256": "v9BtTXubPvT8HaMjEJpXyLugQvFQd5xmjJEaPfvW7wY="
             }
           },
           "ApiGatewayRestApi": {
@@ -2592,7 +2592,7 @@
               "UploadPdfLambdaPermissionApiGateway"
             ]
           },
-          "ApiGatewayDeployment1744721674753": {
+          "ApiGatewayDeployment1744835215340": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -2811,7 +2811,7 @@
           "RegisterUserLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "RegisterUserLambdaVersionQgNVhWrNKDyhZxRPWvaYGhVW4pw4ox4LPKWTSY9HVMA"
+              "Ref": "RegisterUserLambdaVersionG1k33sVwpLnalTge8ERQPdoDc2NoejI5tzonNn7A"
             },
             "Export": {
               "Name": "sls-preventix-api-prod-RegisterUserLambdaFunctionQualifiedArn"
@@ -2820,7 +2820,7 @@
           "LoginUserLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "LoginUserLambdaVersionvxbY5W0NaU3iYubSTOHqOBld9ARQTldKwulE3jq4w"
+              "Ref": "LoginUserLambdaVersion8ri6tiR9upXo6DI4lakDSQvbXqMknu11msAiUEVH48Y"
             },
             "Export": {
               "Name": "sls-preventix-api-prod-LoginUserLambdaFunctionQualifiedArn"
@@ -2829,7 +2829,7 @@
           "GetUsersLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetUsersLambdaVersiontLq7iwGoPytyjCXzn81yghr8Jo70CTEXRYkPGT6GRt0"
+              "Ref": "GetUsersLambdaVersionemdvwNfCKQOWHWWd8Ov2aEDzuPSJMrNuGjHZS6kGE"
             },
             "Export": {
               "Name": "sls-preventix-api-prod-GetUsersLambdaFunctionQualifiedArn"
@@ -2838,7 +2838,7 @@
           "GetUserLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetUserLambdaVersionJTyBLc7aNwU7BRvtdvoHRrjAq0qf7fgiPcTHRH5E"
+              "Ref": "GetUserLambdaVersionsnqRV4ca18hMPy2qeU8IDBgnHdZZLGG5oEUwXEQnfNI"
             },
             "Export": {
               "Name": "sls-preventix-api-prod-GetUserLambdaFunctionQualifiedArn"
@@ -2847,7 +2847,7 @@
           "UploadPdfLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "UploadPdfLambdaVersionIwxyD246djHPeubGpJ4FyFnKENAvGKwuFYADh01JWz4"
+              "Ref": "UploadPdfLambdaVersionbe4l9rPGAmVUFUjtoQ2X4ZDdoWIPIQAEN4LvY4oMx88"
             },
             "Export": {
               "Name": "sls-preventix-api-prod-UploadPdfLambdaFunctionQualifiedArn"
@@ -2989,36 +2989,36 @@
     "serviceProviderAwsCfStackName": "preventix-api-prod",
     "serviceProviderAwsCfStackId": "arn:aws:cloudformation:sa-east-1:017116125096:stack/preventix-api-prod/03a55010-118a-11f0-b96b-0a6865cb9759",
     "serviceProviderAwsCfStackCreated": "2025-04-04T19:21:31.811Z",
-    "serviceProviderAwsCfStackUpdated": "2025-04-15T12:51:43.211Z",
+    "serviceProviderAwsCfStackUpdated": "2025-04-16T20:03:00.108Z",
     "serviceProviderAwsCfStackStatus": "UPDATE_COMPLETE",
     "serviceProviderAwsCfStackOutputs": [
       {
         "OutputKey": "RegisterUserLambdaFunctionQualifiedArn",
-        "OutputValue": "arn:aws:lambda:sa-east-1:017116125096:function:preventix-api-prod-registerUser:9",
+        "OutputValue": "arn:aws:lambda:sa-east-1:017116125096:function:preventix-api-prod-registerUser:12",
         "Description": "Current Lambda function version",
         "ExportName": "sls-preventix-api-prod-RegisterUserLambdaFunctionQualifiedArn"
       },
       {
         "OutputKey": "GetUsersLambdaFunctionQualifiedArn",
-        "OutputValue": "arn:aws:lambda:sa-east-1:017116125096:function:preventix-api-prod-getUsers:9",
+        "OutputValue": "arn:aws:lambda:sa-east-1:017116125096:function:preventix-api-prod-getUsers:12",
         "Description": "Current Lambda function version",
         "ExportName": "sls-preventix-api-prod-GetUsersLambdaFunctionQualifiedArn"
       },
       {
         "OutputKey": "UploadPdfLambdaFunctionQualifiedArn",
-        "OutputValue": "arn:aws:lambda:sa-east-1:017116125096:function:preventix-api-prod-uploadPdf:7",
+        "OutputValue": "arn:aws:lambda:sa-east-1:017116125096:function:preventix-api-prod-uploadPdf:10",
         "Description": "Current Lambda function version",
         "ExportName": "sls-preventix-api-prod-UploadPdfLambdaFunctionQualifiedArn"
       },
       {
         "OutputKey": "LoginUserLambdaFunctionQualifiedArn",
-        "OutputValue": "arn:aws:lambda:sa-east-1:017116125096:function:preventix-api-prod-loginUser:9",
+        "OutputValue": "arn:aws:lambda:sa-east-1:017116125096:function:preventix-api-prod-loginUser:12",
         "Description": "Current Lambda function version",
         "ExportName": "sls-preventix-api-prod-LoginUserLambdaFunctionQualifiedArn"
       },
       {
         "OutputKey": "GetUserLambdaFunctionQualifiedArn",
-        "OutputValue": "arn:aws:lambda:sa-east-1:017116125096:function:preventix-api-prod-getUser:2",
+        "OutputValue": "arn:aws:lambda:sa-east-1:017116125096:function:preventix-api-prod-getUser:5",
         "Description": "Current Lambda function version",
         "ExportName": "sls-preventix-api-prod-GetUserLambdaFunctionQualifiedArn"
       },
@@ -3244,7 +3244,7 @@
               "S3Bucket": {
                 "Ref": "ServerlessDeploymentBucket"
               },
-              "S3Key": "serverless/preventix-api/prod/1744721679069-2025-04-15T12:54:39.069Z/preventix-api.zip"
+              "S3Key": "serverless/preventix-api/prod/1744835220264-2025-04-16T20:27:00.264Z/preventix-api.zip"
             },
             "Handler": "src/handler.registerUser",
             "Runtime": "nodejs18.x",
@@ -3277,7 +3277,7 @@
               "S3Bucket": {
                 "Ref": "ServerlessDeploymentBucket"
               },
-              "S3Key": "serverless/preventix-api/prod/1744721679069-2025-04-15T12:54:39.069Z/preventix-api.zip"
+              "S3Key": "serverless/preventix-api/prod/1744835220264-2025-04-16T20:27:00.264Z/preventix-api.zip"
             },
             "Handler": "src/handler.loginUser",
             "Runtime": "nodejs18.x",
@@ -3310,7 +3310,7 @@
               "S3Bucket": {
                 "Ref": "ServerlessDeploymentBucket"
               },
-              "S3Key": "serverless/preventix-api/prod/1744721679069-2025-04-15T12:54:39.069Z/preventix-api.zip"
+              "S3Key": "serverless/preventix-api/prod/1744835220264-2025-04-16T20:27:00.264Z/preventix-api.zip"
             },
             "Handler": "src/handler.getUsers",
             "Runtime": "nodejs18.x",
@@ -3343,7 +3343,7 @@
               "S3Bucket": {
                 "Ref": "ServerlessDeploymentBucket"
               },
-              "S3Key": "serverless/preventix-api/prod/1744721679069-2025-04-15T12:54:39.069Z/preventix-api.zip"
+              "S3Key": "serverless/preventix-api/prod/1744835220264-2025-04-16T20:27:00.264Z/preventix-api.zip"
             },
             "Handler": "src/handler.getUser",
             "Runtime": "nodejs18.x",
@@ -3376,7 +3376,7 @@
               "S3Bucket": {
                 "Ref": "ServerlessDeploymentBucket"
               },
-              "S3Key": "serverless/preventix-api/prod/1744721679069-2025-04-15T12:54:39.069Z/preventix-api.zip"
+              "S3Key": "serverless/preventix-api/prod/1744835220264-2025-04-16T20:27:00.264Z/preventix-api.zip"
             },
             "Handler": "src/handler.upload",
             "Runtime": "nodejs18.x",
@@ -3402,54 +3402,54 @@
             "UploadPdfLogGroup"
           ]
         },
-        "RegisterUserLambdaVersionQgNVhWrNKDyhZxRPWvaYGhVW4pw4ox4LPKWTSY9HVMA": {
+        "RegisterUserLambdaVersionG1k33sVwpLnalTge8ERQPdoDc2NoejI5tzonNn7A": {
           "Type": "AWS::Lambda::Version",
           "DeletionPolicy": "Retain",
           "Properties": {
             "FunctionName": {
               "Ref": "RegisterUserLambdaFunction"
             },
-            "CodeSha256": "SlNKRY/DBwqB5GWO2hQXR0FO+pE3I+V09ngipHgjCRE="
+            "CodeSha256": "v9BtTXubPvT8HaMjEJpXyLugQvFQd5xmjJEaPfvW7wY="
           }
         },
-        "LoginUserLambdaVersionvxbY5W0NaU3iYubSTOHqOBld9ARQTldKwulE3jq4w": {
+        "LoginUserLambdaVersion8ri6tiR9upXo6DI4lakDSQvbXqMknu11msAiUEVH48Y": {
           "Type": "AWS::Lambda::Version",
           "DeletionPolicy": "Retain",
           "Properties": {
             "FunctionName": {
               "Ref": "LoginUserLambdaFunction"
             },
-            "CodeSha256": "SlNKRY/DBwqB5GWO2hQXR0FO+pE3I+V09ngipHgjCRE="
+            "CodeSha256": "v9BtTXubPvT8HaMjEJpXyLugQvFQd5xmjJEaPfvW7wY="
           }
         },
-        "GetUsersLambdaVersiontLq7iwGoPytyjCXzn81yghr8Jo70CTEXRYkPGT6GRt0": {
+        "GetUsersLambdaVersionemdvwNfCKQOWHWWd8Ov2aEDzuPSJMrNuGjHZS6kGE": {
           "Type": "AWS::Lambda::Version",
           "DeletionPolicy": "Retain",
           "Properties": {
             "FunctionName": {
               "Ref": "GetUsersLambdaFunction"
             },
-            "CodeSha256": "SlNKRY/DBwqB5GWO2hQXR0FO+pE3I+V09ngipHgjCRE="
+            "CodeSha256": "v9BtTXubPvT8HaMjEJpXyLugQvFQd5xmjJEaPfvW7wY="
           }
         },
-        "GetUserLambdaVersionJTyBLc7aNwU7BRvtdvoHRrjAq0qf7fgiPcTHRH5E": {
+        "GetUserLambdaVersionsnqRV4ca18hMPy2qeU8IDBgnHdZZLGG5oEUwXEQnfNI": {
           "Type": "AWS::Lambda::Version",
           "DeletionPolicy": "Retain",
           "Properties": {
             "FunctionName": {
               "Ref": "GetUserLambdaFunction"
             },
-            "CodeSha256": "SlNKRY/DBwqB5GWO2hQXR0FO+pE3I+V09ngipHgjCRE="
+            "CodeSha256": "v9BtTXubPvT8HaMjEJpXyLugQvFQd5xmjJEaPfvW7wY="
           }
         },
-        "UploadPdfLambdaVersionIwxyD246djHPeubGpJ4FyFnKENAvGKwuFYADh01JWz4": {
+        "UploadPdfLambdaVersionbe4l9rPGAmVUFUjtoQ2X4ZDdoWIPIQAEN4LvY4oMx88": {
           "Type": "AWS::Lambda::Version",
           "DeletionPolicy": "Retain",
           "Properties": {
             "FunctionName": {
               "Ref": "UploadPdfLambdaFunction"
             },
-            "CodeSha256": "SlNKRY/DBwqB5GWO2hQXR0FO+pE3I+V09ngipHgjCRE="
+            "CodeSha256": "v9BtTXubPvT8HaMjEJpXyLugQvFQd5xmjJEaPfvW7wY="
           }
         },
         "ApiGatewayRestApi": {
@@ -3994,7 +3994,7 @@
             "UploadPdfLambdaPermissionApiGateway"
           ]
         },
-        "ApiGatewayDeployment1744721674753": {
+        "ApiGatewayDeployment1744835215340": {
           "Type": "AWS::ApiGateway::Deployment",
           "Properties": {
             "RestApiId": {
@@ -4213,7 +4213,7 @@
         "RegisterUserLambdaFunctionQualifiedArn": {
           "Description": "Current Lambda function version",
           "Value": {
-            "Ref": "RegisterUserLambdaVersionQgNVhWrNKDyhZxRPWvaYGhVW4pw4ox4LPKWTSY9HVMA"
+            "Ref": "RegisterUserLambdaVersionG1k33sVwpLnalTge8ERQPdoDc2NoejI5tzonNn7A"
           },
           "Export": {
             "Name": "sls-preventix-api-prod-RegisterUserLambdaFunctionQualifiedArn"
@@ -4222,7 +4222,7 @@
         "LoginUserLambdaFunctionQualifiedArn": {
           "Description": "Current Lambda function version",
           "Value": {
-            "Ref": "LoginUserLambdaVersionvxbY5W0NaU3iYubSTOHqOBld9ARQTldKwulE3jq4w"
+            "Ref": "LoginUserLambdaVersion8ri6tiR9upXo6DI4lakDSQvbXqMknu11msAiUEVH48Y"
           },
           "Export": {
             "Name": "sls-preventix-api-prod-LoginUserLambdaFunctionQualifiedArn"
@@ -4231,7 +4231,7 @@
         "GetUsersLambdaFunctionQualifiedArn": {
           "Description": "Current Lambda function version",
           "Value": {
-            "Ref": "GetUsersLambdaVersiontLq7iwGoPytyjCXzn81yghr8Jo70CTEXRYkPGT6GRt0"
+            "Ref": "GetUsersLambdaVersionemdvwNfCKQOWHWWd8Ov2aEDzuPSJMrNuGjHZS6kGE"
           },
           "Export": {
             "Name": "sls-preventix-api-prod-GetUsersLambdaFunctionQualifiedArn"
@@ -4240,7 +4240,7 @@
         "GetUserLambdaFunctionQualifiedArn": {
           "Description": "Current Lambda function version",
           "Value": {
-            "Ref": "GetUserLambdaVersionJTyBLc7aNwU7BRvtdvoHRrjAq0qf7fgiPcTHRH5E"
+            "Ref": "GetUserLambdaVersionsnqRV4ca18hMPy2qeU8IDBgnHdZZLGG5oEUwXEQnfNI"
           },
           "Export": {
             "Name": "sls-preventix-api-prod-GetUserLambdaFunctionQualifiedArn"
@@ -4249,7 +4249,7 @@
         "UploadPdfLambdaFunctionQualifiedArn": {
           "Description": "Current Lambda function version",
           "Value": {
-            "Ref": "UploadPdfLambdaVersionIwxyD246djHPeubGpJ4FyFnKENAvGKwuFYADh01JWz4"
+            "Ref": "UploadPdfLambdaVersionbe4l9rPGAmVUFUjtoQ2X4ZDdoWIPIQAEN4LvY4oMx88"
           },
           "Export": {
             "Name": "sls-preventix-api-prod-UploadPdfLambdaFunctionQualifiedArn"

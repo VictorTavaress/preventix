@@ -15508,7 +15508,40 @@ function verifyToken(event) {
 // src/controllers/userController.ts
 var registerUser = async (event) => {
   try {
-    const { name, email, password, company } = JSON.parse(event.body || "{}");
+    const body = JSON.parse(event.body || "{}");
+    let name = "";
+    let email = "";
+    let password = "";
+    let company = "";
+    if ("eventType" in body && body.eventType === "FORM_RESPONSE") {
+      const fields = body.data?.fields || [];
+      const normalize = (str) => str?.trim().toLowerCase();
+      const getFieldValue = (label) => {
+        const field = fields.find((f) => normalize(f.label) === normalize(label));
+        if (!field) return null;
+        if (field.type === "MULTIPLE_CHOICE") {
+          const selectedId = field.value?.[0];
+          const selectedOption = field.options?.find((opt) => opt.id === selectedId);
+          return selectedOption?.text || selectedId;
+        }
+        return field.value;
+      };
+      name = getFieldValue("Nome");
+      email = getFieldValue("Email");
+      password = getFieldValue("Senha");
+      company = getFieldValue("Qual sua empresa?");
+    } else {
+      name = body.name;
+      email = body.email;
+      password = body.password;
+      company = body.company;
+    }
+    if (!name || !email || !password || !company) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ error: "Campos obrigat\xF3rios ausentes" })
+      };
+    }
     const existingUser = await getUserByEmail(email);
     if (existingUser) {
       return {

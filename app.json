@@ -24,10 +24,19 @@
       "infoPlist": {
         "NSCameraUsageDescription": "Este aplicativo requer acesso à câmera para tirar fotos.",
         "NSPhotoLibraryUsageDescription": "Este aplicativo requer acesso à sua biblioteca de fotos.",
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSDocumentsFolderUsageDescription": "Este aplicativo precisa salvar arquivos PDF no dispositivo."
       }
     },
     "android": {
+      "package": "com.preventix.app",
+      "versionCode": 1,
+      "permissions": [
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "MANAGE_EXTERNAL_STORAGE"
+      ],
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/IconLogobg.png",
         "backgroundColor": "#0D0D1B"
