@@ -20,24 +20,22 @@ export default function PhotoInfoScreen() {
 
   const updateImages = (newImages: string[]) => {
     setImages(newImages);
-    updateFormData({
-      photos: newImages, // 👈 salva no form
-    });
+    updateFormData({ photos: newImages });
   };
 
   const pickImage = async () => {
-    if (images.length >= 4) return;
+    if (images.length >= 5) return;
 
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       quality: 1,
-      base64: false, // ❌ NÃO pegar base64 aqui ainda
+      base64: false,
     });
 
     if (!result.canceled) {
       const manipulated = await ImageManipulator.manipulateAsync(
         result.assets[0].uri,
-        [{ resize: { width: 800 } }], // 👈 Redimensiona
+        [{ resize: { width: 800 } }],
         {
           compress: 0.6,
           format: ImageManipulator.SaveFormat.JPEG,
@@ -46,13 +44,13 @@ export default function PhotoInfoScreen() {
       );
 
       const uri = `data:image/jpeg;base64,${manipulated.base64}`;
-      const updated = [...images, uri].slice(0, 4);
+      const updated = [...images, uri].slice(0, 5);
       updateImages(updated);
     }
   };
 
   const takePhoto = async () => {
-    if (images.length >= 4) return;
+    if (images.length >= 5) return;
 
     const permission = await ImagePicker.requestCameraPermissionsAsync();
     if (!permission.granted) {
@@ -77,64 +75,71 @@ export default function PhotoInfoScreen() {
       );
 
       const uri = `data:image/jpeg;base64,${manipulated.base64}`;
-      const updated = [...images, uri].slice(0, 4);
+      const updated = [...images, uri].slice(0, 5);
       updateImages(updated);
     }
   };
 
   const removeImage = (uriToRemove: string) => {
     const updated = images.filter((uri) => uri !== uriToRemove);
-    updateImages(updated); // 👈 remove local + form
+    updateImages(updated);
   };
-
-  const renderImageItem = ({ item }: { item: string }) => (
-    <View className="relative w-[48%] mb-4">
-      <Image
-        source={{ uri: item }}
-        className="w-full h-40 rounded"
-        resizeMode="cover"
-      />
-      <TouchableOpacity
-        onPress={() => removeImage(item)}
-        className="absolute top-2 right-2 bg-red-500 p-1 rounded-full"
-      >
-        <Ionicons name="close" size={16} color="white" />
-      </TouchableOpacity>
-    </View>
-  );
 
   return (
     <View className="flex-1 bg-gray-200 px-6 py-10">
       <Text className="text-3xl font-bold text-center mb-10">Preventix</Text>
 
       <Text className="bg-black text-white text-center py-2 rounded mb-4">
-        Fotos da máquina ({images.length}/4)
+        Fotos da máquina ({images.length}/5)
       </Text>
 
-      <FlatList
-        data={images}
-        numColumns={2}
-        keyExtractor={(item) => item}
-        renderItem={({ item }) => (
-          <View className="relative w-[48%] mb-4">
+      {images.length > 0 && (
+        <View className="mb-6">
+          <Text className="mb-2 font-semibold text-base text-gray-800">
+            Imagem de Cabeçalho
+          </Text>
+          <View className="relative">
             <Image
-              source={{ uri: item }}
-              className="w-full h-40 rounded"
+              source={{ uri: images[0] }}
+              className="w-full h-48 rounded"
               resizeMode="cover"
             />
             <TouchableOpacity
-              onPress={() => removeImage(item)}
+              onPress={() => removeImage(images[0])}
               className="absolute top-2 right-2 bg-red-500 p-1 rounded-full"
             >
               <Ionicons name="close" size={16} color="white" />
             </TouchableOpacity>
           </View>
-        )}
-        columnWrapperStyle={{ justifyContent: "space-between" }}
-        contentContainerStyle={{ gap: 8 }}
-      />
+        </View>
+      )}
 
-      {images.length < 4 && (
+      {images.length > 1 && (
+        <FlatList
+          data={images.slice(1)}
+          numColumns={2}
+          keyExtractor={(item) => item}
+          renderItem={({ item }) => (
+            <View className="relative w-[48%] mb-4">
+              <Image
+                source={{ uri: item }}
+                className="w-full h-40 rounded"
+                resizeMode="cover"
+              />
+              <TouchableOpacity
+                onPress={() => removeImage(item)}
+                className="absolute top-2 right-2 bg-red-500 p-1 rounded-full"
+              >
+                <Ionicons name="close" size={16} color="white" />
+              </TouchableOpacity>
+            </View>
+          )}
+          columnWrapperStyle={{ justifyContent: "space-between" }}
+          contentContainerStyle={{ gap: 8 }}
+        />
+      )}
+
+      {images.length < 5 && (
         <>
           <TouchableOpacity
             onPress={pickImage}

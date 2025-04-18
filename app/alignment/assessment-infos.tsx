@@ -62,6 +62,11 @@ export default function AssessmentInfosScreen() {
   };
 
   const handleNext = () => {
+    if (!isFormComplete()) {
+      alert("Por favor, preencha todos os campos antes de continuar.");
+      return;
+    }
+
     updateFormData({
       alignmentInfo: {
         found,
@@ -70,6 +75,14 @@ export default function AssessmentInfosScreen() {
     });
 
     router.push("/alignment/photo-info");
+  };
+
+  const isFormComplete = () => {
+    const allFields = [found, corrected];
+
+    return allFields.every((section) =>
+      Object.values(section).every((pair) => pair.vertical && pair.horizontal)
+    );
   };
 
   const renderSection = (label: string, type: "found" | "corrected") => {
@@ -139,7 +152,7 @@ export default function AssessmentInfosScreen() {
           {renderSection("Conforme encontrado", "found")}
           {renderSection("Conforme corrigido", "corrected")}
 
-          <View className="flex-row gap-4 mt-8 mb-8">
+          <View className="flex-row gap-4 mt-8 mb-14">
             <TouchableOpacity
               onPress={() => router.back()}
               className="flex-1 bg-yellow-600 py-4 rounded"
@@ -150,7 +163,10 @@ export default function AssessmentInfosScreen() {
             </TouchableOpacity>
             <TouchableOpacity
               onPress={handleNext}
-              className="flex-1 bg-yellow-600 py-4 rounded"
+              className={`flex-1 py-4 rounded ${
+                isFormComplete() ? "bg-yellow-600" : "bg-gray-400"
+              }`}
+              disabled={!isFormComplete()}
             >
               <Text className="text-center text-white font-semibold text-base">
                 Próximo →

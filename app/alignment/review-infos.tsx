@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -30,6 +30,7 @@ export default function ReviewInfosScreen() {
   const general = formData.generalInfo || {};
   const found = formData.alignmentInfo?.found || {};
   const corrected = formData.alignmentInfo?.corrected || {};
+  const [isGenerating, setIsGenerating] = useState(false);
 
   function compareWithTolerance(
     value: number | string | undefined | null,
@@ -67,6 +68,7 @@ export default function ReviewInfosScreen() {
   }
 
   async function handleGeneratePDF() {
+    setIsGenerating(true);
     const fileName =
       `Alinhamento-${general.company}-${general.operator}.pdf`.replace(
         /\s+/g,
@@ -184,6 +186,8 @@ export default function ReviewInfosScreen() {
     } catch (error) {
       console.error("Erro ao gerar ou enviar PDF:", error);
       Alert.alert("Erro", "Não foi possível gerar ou enviar o PDF.");
+    } finally {
+      setIsGenerating(false);
     }
   }
 
@@ -257,31 +261,55 @@ export default function ReviewInfosScreen() {
 
       {/* Foto da máquina */}
       <Section title="Foto da máquina">
-        <View className="flex-row flex-wrap gap-4">
-          {formData.photos?.length ? (
-            formData.photos.map((uri: string, index: number) => (
-              <Image
-                key={uri || index}
-                source={{ uri }}
-                className="w-[48%] h-40 rounded"
-                resizeMode="cover"
-              />
-            ))
-          ) : (
-            <Text className="text-gray-500">Nenhuma foto adicionada.</Text>
-          )}
-        </View>
+        {formData.photos?.length ? (
+          <>
+            {/* Foto de cabeçalho */}
+            <Image
+              source={{ uri: formData.photos[0] }}
+              className="w-full h-52 mb-4 rounded"
+              resizeMode="cover"
+            />
+
+            {/* Outras fotos em grid */}
+            <View className="flex-row flex-wrap gap-4">
+              {formData.photos.slice(1).map((uri: string, index: number) => (
+                <Image
+                  key={uri || index}
+                  source={{ uri }}
+                  className="w-[48%] h-40 rounded"
+                  resizeMode="cover"
+                />
+              ))}
+            </View>
+          </>
+        ) : (
+          <Text className="text-gray-500">Nenhuma foto adicionada.</Text>
+        )}
       </Section>
 
       {/* Botão final */}
       <TouchableOpacity
-        className="bg-yellow-600 py-4 rounded mt-4 mb-12 flex-row justify-center items-center"
+        className={`py-4 rounded mt-4 mb-12 flex-row justify-center items-center ${
+          isGenerating ? "bg-yellow-400" : "bg-yellow-600"
+        }`}
         onPress={handleGeneratePDF}
+        disabled={isGenerating}
       >
-        <Ionicons name="download-outline" size={20} color="white" />
-        <Text className="text-white ml-2 font-semibold text-base">
-          Gerar PDF
-        </Text>
+        {isGenerating ? (
+          <>
+            <Ionicons name="time-outline" size={20} color="white" />
+            <Text className="text-white ml-2 font-semibold text-base">
+              Gerando...
+            </Text>
+          </>
+        ) : (
+          <>
+            <Ionicons name="download-outline" size={20} color="white" />
+            <Text className="text-white ml-2 font-semibold text-base">
+              Gerar PDF
+            </Text>
+          </>
+        )}
       </TouchableOpacity>
     </ScrollView>
   );
