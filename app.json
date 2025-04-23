@@ -2,7 +2,7 @@
   "expo": {
     "name": "preventix",
     "slug": "preventix",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/P.png",
     "scheme": "myapp",
@@ -20,7 +20,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.preventix.app",
-      "buildNumber": "1.0.0",
+      "buildNumber": "2.0.0",
       "infoPlist": {
         "NSCameraUsageDescription": "Este aplicativo requer acesso à câmera para tirar fotos.",
         "NSPhotoLibraryUsageDescription": "Este aplicativo requer acesso à sua biblioteca de fotos.",
