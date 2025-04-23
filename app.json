@@ -2,7 +2,7 @@
   "expo": {
     "name": "preventix",
     "slug": "preventix",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/images/P.png",
     "scheme": "myapp",
@@ -20,12 +20,12 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.preventix.app",
-      "buildNumber": "2.0.0",
+      "buildNumber": "2.0.1",
       "infoPlist": {
-        "NSCameraUsageDescription": "Este aplicativo requer acesso à câmera para tirar fotos.",
-        "NSPhotoLibraryUsageDescription": "Este aplicativo requer acesso à sua biblioteca de fotos.",
-        "ITSAppUsesNonExemptEncryption": false,
-        "NSDocumentsFolderUsageDescription": "Este aplicativo precisa salvar arquivos PDF no dispositivo."
+        "NSCameraUsageDescription": "Este aplicativo utiliza a câmera para capturar imagens técnicas de equipamentos durante inspeções em campo. As fotos são incluídas automaticamente em relatórios técnicos em PDF.",
+        "NSPhotoLibraryUsageDescription": "Este aplicativo acessa a biblioteca de fotos para permitir o upload de imagens já existentes, que serão utilizadas em relatórios técnicos.",
+        "NSDocumentsFolderUsageDescription": "Este aplicativo salva relatórios técnicos em PDF no dispositivo para acesso local, compartilhamento e upload seguro para a nuvem.",
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
