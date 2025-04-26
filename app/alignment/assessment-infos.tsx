@@ -90,7 +90,7 @@ export default function AssessmentInfosScreen() {
 
     return (
       <>
-        <Text className="bg-black text-white text-center py-2 rounded mb-4">
+        <Text className="bg-[#0D0D1B] text-white text-center py-2 rounded mb-4">
           {label}
         </Text>
 

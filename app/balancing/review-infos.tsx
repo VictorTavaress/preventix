@@ -10,7 +10,7 @@ import {
 import { useForm } from "../../lib/formContext";
 import { Ionicons } from "@expo/vector-icons";
 import { generatePdf } from "../../lib/utils";
-import { alignmentTemplate } from "../../assets/pdf-template/alignment-pdf"; // template em string
+import { balancingTemplate } from "../../assets/pdf-template/balancing-pdf"; // template em string
 import { router } from "expo-router";
 import NetInfo from "@react-native-community/netinfo";
 import * as FileSystem from "expo-file-system";
@@ -23,54 +23,21 @@ import {
   senseImage,
 } from "../../assets/images/base64Static";
 import { useAuth } from "../../lib/authContext";
+import { VibChart } from "../../components/chart/chartBalancing";
 
 export default function ReviewInfosScreen() {
   const { formData } = useForm();
   const { user }: any = useAuth(); // Pegando os dados do usuário do contexto
   const general = formData.generalInfo || {};
-  const found = formData.alignmentInfo?.found || {};
-  const corrected = formData.alignmentInfo?.corrected || {};
+  const massCorrection = formData.massCorrection || {};
+  const vibration = formData.vibration || {};
   const [isGenerating, setIsGenerating] = useState(false);
-
-  function compareWithTolerance(
-    value: number | string | undefined | null,
-    tolerance: number | string | undefined | null
-  ): string {
-    if (
-      value === undefined ||
-      value === null ||
-      tolerance === undefined ||
-      tolerance === null
-    )
-      return "";
-
-    // Corrige vírgula decimal e extrai número do valor
-    const parsedValue =
-      typeof value === "string"
-        ? parseFloat(value.replace(",", ".").match(/[\d.]+/)?.[0] ?? "")
-        : value;
-
-    // Corrige vírgula decimal e extrai número da tolerância
-    const parsedTolerance =
-      typeof tolerance === "string"
-        ? parseFloat(tolerance.replace(",", ".").match(/[\d.]+/)?.[0] ?? "")
-        : tolerance;
-
-    if (isNaN(parsedValue) || isNaN(parsedTolerance)) return "";
-
-    const isOk = Math.abs(parsedValue) <= parsedTolerance;
-    const symbol = isOk ? "✓" : "✗";
-    const color = isOk ? "green" : "red";
-
-    return `<span>${parsedValue.toFixed(
-      2
-    )} <span style="color: ${color}; font-weight: bold;">${symbol}</span></span>`;
-  }
+  const [chartBase64, setChartBase64] = useState<string | null>(null);
 
   async function handleGeneratePDF() {
     setIsGenerating(true);
     const fileName =
-      `Alinhamento-${general.company}-${general.operator}.pdf`.replace(
+      `Balanceamento-${general.client}-${general.technician}.pdf`.replace(
         /\s+/g,
         "_"
       );
@@ -89,77 +56,52 @@ export default function ReviewInfosScreen() {
     }
     try {
       const { isConnected } = await NetInfo.fetch();
-
       const filePath = await generatePdf({
-        htmlTemplate: alignmentTemplate,
+        htmlTemplate: balancingTemplate,
         fileName,
         placeholders: {
           // Informações gerais
-          "{{machineId}}": general.machineId || "",
-          "{{company}}": general.company || "",
+          "{{client}}": general.client || "",
           "{{date}}": general.date || "",
-          "{{operator}}": general.operator || "",
+          "{{requester}}": general.requester || "",
+          "{{tag}}": general.tag || "",
+          "{{technician}}": general.technician || "",
           "{{notes}}": general.notes || "",
 
-          // Tolerâncias
-          "{{speed}}": general.speed || "",
-          "{{deviation}}": general.deviation || "",
-          "{{angularError}}": general.angularError || "",
+          // Infos da maquina
+          "{{rotation}}": general.rotation || "",
+          "{{power}}": general.power || "",
+          "{{blades}}": general.blades || "",
+          "{{transmissionType}}": general.transmissionType || "",
 
-          // Conforme encontrado (com lógica de tolerância)
-          "{{foundDeviationVertical}}": compareWithTolerance(
-            found.deviation?.vertical,
-            general.deviation
-          ),
-          "{{foundDeviationHorizontal}}": compareWithTolerance(
-            found.deviation?.horizontal,
-            general.deviation
-          ),
-          "{{foundAngleVertical}}": compareWithTolerance(
-            found.angle?.vertical,
-            general.angularError
-          ),
-          "{{foundAngleHorizontal}}": compareWithTolerance(
-            found.angle?.horizontal,
-            general.angularError
-          ),
+          // Balanceamento - Correção de Massa (ponto 1)
+          "{{angle1}}": massCorrection?.test1?.angle || "",
+          "{{weight1}}": massCorrection?.test1?.weight || "",
+          "{{correctionAngle1}}": massCorrection?.test1?.correctionAngle || "",
+          "{{correctionWeight1}}":
+            massCorrection?.test1?.correctionWeight || "",
 
-          // Pés encontrados (sem comparação)
-          "{{foundFrontFootVertical}}": found.frontFoot?.vertical || "",
-          "{{foundFrontFootHorizontal}}": found.frontFoot?.horizontal || "",
-          "{{foundRearFootVertical}}": found.rearFoot?.vertical || "",
-          "{{foundRearFootHorizontal}}": found.rearFoot?.horizontal || "",
+          // Balanceamento - Correção de Massa (ponto 2)
+          "{{angle2}}": massCorrection?.test2?.angle || "",
+          "{{weight2}}": massCorrection?.test2?.weight || "",
+          "{{correctionAngle2}}": massCorrection?.test2?.correctionAngle || "",
+          "{{correctionWeight2}}":
+            massCorrection?.test2?.correctionWeight || "",
 
-          // Conforme corrigido (com lógica de tolerância)
-          "{{correctedDeviationVertical}}": compareWithTolerance(
-            corrected.deviation?.vertical,
-            general.deviation
-          ),
-          "{{correctedDeviationHorizontal}}": compareWithTolerance(
-            corrected.deviation?.horizontal,
-            general.deviation
-          ),
-          "{{correctedAngleVertical}}": compareWithTolerance(
-            corrected.angle?.vertical,
-            general.angularError
-          ),
-          "{{correctedAngleHorizontal}}": compareWithTolerance(
-            corrected.angle?.horizontal,
-            general.angularError
-          ),
+          // Vibração
+          "{{initial1}}": vibration?.initial1 || "",
+          "{{final1}}": vibration?.final1 || "",
+          "{{result1}}": vibration?.result1 || "",
 
-          // Pés corrigidos (sem comparação)
-          "{{correctedFrontFootVertical}}": corrected.frontFoot?.vertical || "",
-          "{{correctedFrontFootHorizontal}}":
-            corrected.frontFoot?.horizontal || "",
-          "{{correctedRearFootVertical}}": corrected.rearFoot?.vertical || "",
-          "{{correctedRearFootHorizontal}}":
-            corrected.rearFoot?.horizontal || "",
+          "{{initial2}}": vibration?.initial2 || "",
+          "{{final2}}": vibration?.final2 || "",
+          "{{result2}}": vibration?.result2 || "",
         },
         images: remainingImages,
         firstImage: firstImage,
         staticImage: staticImage,
         companyLogo,
+        chartImage: chartBase64 || "",
       });
 
       if (isConnected) {
@@ -195,82 +137,122 @@ export default function ReviewInfosScreen() {
     <ScrollView className="flex-1 bg-gray-100 px-6 py-10">
       <Text className="text-3xl font-bold text-center mb-10">Preventix</Text>
 
-      {/* Informações gerais */}
+      {/* Informações Gerais */}
       <Section title="Informações gerais">
-        <Label title="ID da máquina" value={general.machineId} />
-        <Label title="Empresa" value={general.company} />
-        <Label title="Data" value={general.date} />
-        <Label title="Operador" value={general.operator} />
-        <Label title="Notas" value={general.notes} />
+        <View className="flex-row gap-4">
+          <View className="flex-1">
+            <Label title="Técnico" value={general.technician} />
+          </View>
+          <View className="flex-1">
+            <Label title="Data" value={general.date} />
+          </View>
+        </View>
+        <View className="flex-row gap-4">
+          <View className="flex-1">
+            <Label title="Cliente" value={general.client} />
+          </View>
+          <View className="flex-1">
+            <Label title="Solicitante" value={general.requester} />
+          </View>
+        </View>
+        <View className="flex-row gap-4">
+          <View className="flex-1">
+            <Label title="Potência (kW)" value={general.power} />
+          </View>
+          <View className="flex-1">
+            <Label title="RPM" value={general.rotation} />
+          </View>
+        </View>
+        <View className="flex-row gap-4">
+          <View className="flex-1">
+            <Label title="Nº de pás" value={general.blades} />
+          </View>
+          <View className="flex-1">
+            <Label
+              title="Tipo de transmissão"
+              value={general.transmissionType}
+            />
+          </View>
+        </View>
+        <Label title="TAG" value={general.tag} />
       </Section>
 
-      {/* Tolerâncias */}
-      <Section title="Tolerâncias">
-        <Label title="Velocidade (rpm)" value={general.speed} />
-        <Label title="Desvio (mm)" value={general.deviation} />
-        <Label title="Erro angular (mm/100)" value={general.angularError} />
+      {/* Correção de massa */}
+      <Section title="Correções de massa">
+        {Object.entries(massCorrection).map(([testName, data]: any) => (
+          <View key={testName} className="mb-4">
+            <Text className="font-semibold text-base text-gray-700 mb-2">
+              {testName === "test1" ? "Teste de massa 1" : "Teste de massa 2"}
+            </Text>
+            <View className="flex-row gap-4">
+              <View className="flex-1">
+                <Label title="Peso" value={data.weight} />
+              </View>
+              <View className="flex-1">
+                <Label title="Ângulo" value={data.angle} />
+              </View>
+            </View>
+            <View className="flex-row gap-4">
+              <View className="flex-1">
+                <Label title="Peso de correção" value={data.correctionWeight} />
+              </View>
+              <View className="flex-1">
+                <Label
+                  title="Ângulo de correção"
+                  value={data.correctionAngle}
+                />
+              </View>
+            </View>
+          </View>
+        ))}
       </Section>
 
-      {/* Conforme encontrado */}
-      <Section title="Conforme encontrado">
-        {renderDualField(
-          "Desvio (mm)",
-          found.deviation?.vertical,
-          found.deviation?.horizontal
-        )}
-        {renderDualField(
-          "Ângulo (mm/100)",
-          found.angle?.vertical,
-          found.angle?.horizontal
-        )}
-        {renderDualField(
-          "Pé dianteiro (mm)",
-          found.frontFoot?.vertical,
-          found.frontFoot?.horizontal
-        )}
-        {renderDualField(
-          "Pé traseiro (mm)",
-          found.rearFoot?.vertical,
-          found.rearFoot?.horizontal
-        )}
+      <Section title="Vibração">
+        <View className="mb-4">
+          <Text className="font-semibold text-base text-gray-700 mb-2">
+            Teste de vibração 1
+          </Text>
+          <View className="flex-row gap-4">
+            <View className="flex-1">
+              <Label title="Valor incial" value={vibration.initial1} />
+            </View>
+            <View className="flex-1">
+              <Label title="Valor final" value={vibration.final1} />
+            </View>
+          </View>
+          <Label title="Resultado" value={vibration.result1} />
+        </View>
+        <View className="mb-4">
+          <Text className="font-semibold text-base text-gray-700 mb-2">
+            Teste de vibração 2
+          </Text>
+          <View className="flex-row gap-4">
+            <View className="flex-1">
+              <Label title="Valor incial" value={vibration.initial2} />
+            </View>
+            <View className="flex-1">
+              <Label title="Valor final" value={vibration.final2} />
+            </View>
+          </View>
+          <Label title="Resultado" value={vibration.result2} />
+        </View>
       </Section>
 
-      {/* Conforme corrigido */}
-      <Section title="Conforme corrigido">
-        {renderDualField(
-          "Desvio (mm)",
-          corrected.deviation?.vertical,
-          corrected.deviation?.horizontal
-        )}
-        {renderDualField(
-          "Ângulo (mm/100)",
-          corrected.angle?.vertical,
-          corrected.angle?.horizontal
-        )}
-        {renderDualField(
-          "Pé dianteiro (mm)",
-          corrected.frontFoot?.vertical,
-          corrected.frontFoot?.horizontal
-        )}
-        {renderDualField(
-          "Pé traseiro (mm)",
-          corrected.rearFoot?.vertical,
-          corrected.rearFoot?.horizontal
-        )}
+      <Section title="Gráfico de vibração">
+        <View className="mb-6">
+          <VibChart visible={true} onCapture={setChartBase64} />
+        </View>
       </Section>
 
-      {/* Foto da máquina */}
-      <Section title="Foto da máquina">
+      {/* Fotos */}
+      <Section title="Fotos do processo">
         {formData.photos?.length ? (
           <>
-            {/* Foto de cabeçalho */}
             <Image
               source={{ uri: formData.photos[0] }}
               className="w-full h-52 mb-4 rounded"
               resizeMode="cover"
             />
-
-            {/* Outras fotos em grid */}
             <View className="flex-row flex-wrap gap-4">
               {formData.photos.slice(1).map((uri: string, index: number) => (
                 <Image
@@ -286,7 +268,6 @@ export default function ReviewInfosScreen() {
           <Text className="text-gray-500">Nenhuma foto adicionada.</Text>
         )}
       </Section>
-
       {/* Botão final */}
       <TouchableOpacity
         className={`py-4 rounded mt-4 mb-12 flex-row justify-center items-center ${

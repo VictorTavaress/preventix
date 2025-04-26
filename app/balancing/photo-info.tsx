@@ -13,14 +13,14 @@ import { Ionicons } from "@expo/vector-icons";
 import { useForm } from "../../lib/formContext";
 import * as ImageManipulator from "expo-image-manipulator";
 
-export default function PhotoInfoScreen() {
+export default function PhotoBalanceScreen() {
   const [images, setImages] = useState<string[]>([]);
   const router = useRouter();
-  const { formData, updateFormData } = useForm();
+  const { updateFormData } = useForm();
 
   const updateImages = (newImages: string[]) => {
     setImages(newImages);
-    updateFormData({ photos: newImages });
+    updateFormData({ photos: newImages }); // <-- campo específico para balanceamento
   };
 
   const pickImage = async () => {
@@ -90,7 +90,7 @@ export default function PhotoInfoScreen() {
       <Text className="text-3xl font-bold text-center mb-10">Preventix</Text>
 
       <Text className="bg-[#0D0D1B] text-white text-center py-2 rounded mb-4">
-        Fotos da máquina ({images.length}/5)
+        Fotos do Balanceamento ({images.length}/5)
       </Text>
 
       {images.length > 0 && (
@@ -170,7 +170,7 @@ export default function PhotoInfoScreen() {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => router.push("/alignment/review-infos")}
+          onPress={() => router.push("/balancing/review-infos")}
           className="flex-1 bg-yellow-600 py-4 rounded"
         >
           <Text className="text-center text-white font-semibold text-base">

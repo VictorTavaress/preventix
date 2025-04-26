@@ -154,7 +154,7 @@ export default function GeneralInfoScreen() {
             Preventix
           </Text>
 
-          <Text className="bg-black text-white text-center py-2 rounded mb-4">
+          <Text className="bg-[#0D0D1B] text-white text-center py-2 rounded mb-4">
             Informações gerais
           </Text>
 
@@ -197,7 +197,7 @@ export default function GeneralInfoScreen() {
             className="bg-white px-4 py-3 rounded mb-6"
           />
 
-          <Text className="bg-black text-white text-center py-2 rounded mb-4">
+          <Text className="bg-[#0D0D1B] text-white text-center py-2 rounded mb-4">
             Tolerâncias
           </Text>
 

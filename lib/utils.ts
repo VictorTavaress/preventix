@@ -15,6 +15,7 @@ interface GeneratePdfParams {
   firstImage?: string;
   staticImage?: string; // base64 ou caminho local
   companyLogo?: string; // base64 ou caminho local
+  chartImage?: string; // base64 ou caminho local
 }
 
 export const hashPassword = async (password: string) => {
@@ -72,6 +73,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export async function generatePdf({
   htmlTemplate,
+  fileName,
   placeholders,
   images = [],
   imagePlaceholder = '{{photos}}',
@@ -79,6 +81,7 @@ export async function generatePdf({
   firstImage = '',
   staticImage = '',
   companyLogo = '',
+  chartImage = '',
 }: GeneratePdfParams) {
   try {
     let html = htmlTemplate;
@@ -113,14 +116,24 @@ export async function generatePdf({
       html = html.replace('{{staticImageFounded}}', '');
     }
 
+    if (chartImage) {
+      const chartImageHTML = `<img src="${chartImage}" alt="Gráfico de Alinhamento" style="width: 70%; height: 225px;" />`;
+      html = html.replace('{{chartImage}}', chartImageHTML);
+    }
+
+    const backgroundColor = fileName.startsWith('Balanceamento') ? 'rgb(1, 153, 157)' : 'rgb(15, 155, 211)';
+    const title = fileName.startsWith('Balanceamento') ? 'Relatório de Balanceamento' : 'Relatório de Alinhamento de Eixo';
+    const subtitle = fileName.startsWith('Balanceamento') ? 'Balanceamento Dinâmico' : 'Alinhamento a Laser';
+    console.log('backgroundColor', backgroundColor);
+
     // Seção de múltiplas imagens
     if (images.length > 0) {
       const photosHTML = `
         <div style="page-break-before: always;"></div>
         <div style="background:rgb(255, 255, 255); min-height: 80vh; padding: 40px; font-family: Arial, sans-serif;">
-          <div style="background:rgb(15, 155, 211); padding: 20px 32px; border-radius: 2px; margin-bottom: 20px; color: #fff; text-align: center;">
-            <div style="font-size:16px; font-weight: bold;">Relatório de Alinhamento de Eixo</div>
-            <div style="font-size: 12px; margin-top: 2px;">Alinhamento a Laser</div>
+          <div style="background: ${backgroundColor}; padding: 20px 32px; border-radius: 2px; margin-bottom: 20px; color: #fff; text-align: center;">
+            <div style="font-size:16px; font-weight: bold;">${title}</div>
+            <div style="font-size: 12px; margin-top: 2px;">${subtitle}</div>
           </div>
           <div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 10px; margin-top: 20px;">
             ${images

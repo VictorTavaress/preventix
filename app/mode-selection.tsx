@@ -31,6 +31,9 @@ export default function ModeSelectionScreen() {
     if (selectedModel.value === "alinhamento") {
       router.push("/alignment/initial-infos");
     }
+    if (selectedModel.value === "balanceamento") {
+      router.push("/balancing/initial-infos");
+    }
   };
 
   return (
@@ -57,9 +60,9 @@ export default function ModeSelectionScreen() {
             <SelectItem label="Alinhamento" value="alinhamento">
               Alinhamento
             </SelectItem>
-            {/* <SelectItem label="Modelo Visualização" value="visualizacao">
-              Modelo Visualização
-            </SelectItem> */}
+            <SelectItem label="Balanceamento" value="balanceamento">
+              Balanceamento
+            </SelectItem>
           </SelectGroup>
         </SelectContent>
       </Select>
