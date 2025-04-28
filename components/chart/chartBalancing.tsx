@@ -21,13 +21,13 @@ export const VibChart: React.FC<VibChartProps> = ({
   const labels = [
     "Inicial 1",
     "Final 1",
-    ...(initial2 != null ? ["Inicial 2", "Final 2"] : []),
+    ...(initial2 && final2 ? ["Inicial 2", "Final 2"] : []),
   ];
 
   const data = [
     Number(initial1 || 0),
     Number(final1 || 0),
-    ...(initial2 != null ? [Number(initial2), Number(final2)] : []),
+    ...(initial2 && final2 ? [Number(initial2), Number(final2)] : []),
   ];
 
   // índice do maior valor

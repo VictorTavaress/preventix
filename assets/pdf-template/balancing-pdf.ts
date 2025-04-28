@@ -25,7 +25,7 @@ export const balancingTemplate = `
     <!-- todo o conteúdo do relatório aqui -->
  
   <!-- Cabeçalho -->
-  <div style="background: rgb(1, 153, 157); padding: 25px 32px; border-radius: 2px; margin-bottom: 20px; color: #fff; position: relative;">
+  <div style="background: rgb(0, 82, 155); padding: 25px 32px; border-radius: 2px; margin-bottom: 20px; color: #fff; position: relative;">
     <!-- Logo à direita -->
     <div style="position: absolute; top: 10px; right: 15px;">
       {{companyLogo}}
@@ -96,8 +96,8 @@ export const balancingTemplate = `
   </div>
 
   <!-- Resultados -->
-  <div style="background: rgb(1, 153, 157); padding: 10px 32px; border-radius: 2px; margin-bottom: 10px; color: #fff; text-align: center;">
-    <div style="font-size: 16px; font-weight: bold;">Resultados</div>
+  <div style="background: rgb(0, 82, 155); padding: 8px 32px; border-radius: 2px; margin-bottom: 10px; color: #fff; text-align: center;">
+    <div style="font-size: 14px; font-weight: bold;">Resultados</div>
   </div>
 
   <div style="display: flex; gap: 20px;">
@@ -171,8 +171,8 @@ export const balancingTemplate = `
   </div>
   
 <div style="margin-top: 10px;">
-  <div style="background: rgb(1, 153, 157); padding: 10px 32px; border-radius: 2px; margin-bottom: 10px; color: #fff; text-align: center;">
-    <div style="font-size: 16px; font-weight: bold;">Gráfico antes e depois [VIBRAÇÃO]</div>
+  <div style="background: rgb(0, 82, 155); padding: 8px 32px; border-radius: 2px; margin-bottom: 10px; color: #fff; text-align: center;">
+    <div style="font-size: 14px; font-weight: bold;">Gráfico antes e depois [VIBRAÇÃO]</div>
   </div>
   <div style="text-align: center;">
     {{chartImage}}

@@ -117,14 +117,13 @@ export async function generatePdf({
     }
 
     if (chartImage) {
-      const chartImageHTML = `<img src="${chartImage}" alt="Gráfico de Alinhamento" style="width: 70%; height: 225px;" />`;
+      const chartImageHTML = `<img src="${chartImage}" alt="Gráfico de Alinhamento" style="width: 58%; height: 210px;" />`;
       html = html.replace('{{chartImage}}', chartImageHTML);
     }
 
-    const backgroundColor = fileName.startsWith('Balanceamento') ? 'rgb(1, 153, 157)' : 'rgb(15, 155, 211)';
+    const backgroundColor = fileName.startsWith('Balanceamento') ? 'rgb(0, 82, 155)' : 'rgb(15, 155, 211)';
     const title = fileName.startsWith('Balanceamento') ? 'Relatório de Balanceamento' : 'Relatório de Alinhamento de Eixo';
     const subtitle = fileName.startsWith('Balanceamento') ? 'Balanceamento Dinâmico' : 'Alinhamento a Laser';
-    console.log('backgroundColor', backgroundColor);
 
     // Seção de múltiplas imagens
     if (images.length > 0) {
